@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_main.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/27 12:34:20 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/27 18:53:38 by sadoming         ###   ########.fr       */
+/*   Created: 2023/05/09 17:30:06 by sadoming          #+#    #+#             */
+/*   Updated: 2023/12/27 16:44:53 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **args)
+void	ft_bzero(void *s, size_t n)
 {
-	t_program	t_prog;
+	size_t	cnt;
+	char	*dest;
 
-	if (argc < 5 || argc > 6)
+	dest = (char *) s;
+	cnt = 0;
+	while (cnt < n)
 	{
-		write(2, "Wrong number of arguments!\n", 27);
-		exit(1);
+		dest[cnt] = '\0';
+		cnt++;
 	}
-	if (!ft_check_all(args))
-		exit(1);
-	ft_init_prog(&t_prog, args, argc);
-	if (!t_prog.t_philos)
-		exit(1);
-	printf("OK\n");
-	return (0);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*call;
+
+	call = malloc(count * size);
+	if (call == 0)
+		return (0);
+	ft_bzero(call, count * size);
+	return (call);
 }

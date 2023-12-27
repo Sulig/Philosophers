@@ -6,14 +6,14 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2023/12/27 13:57:51 by sadoming         ###   ########.fr        #
+#    Updated: 2023/12/27 18:53:25 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 # Default arguments on make run
-DEF = 2 200 20 30 
+DEF = 4 310 200 100 
 # ------------------ #
 # Flags:
 
@@ -26,7 +26,7 @@ MAK = Makefile
 
 LIB = philo.h
 
-SRC = philo_main.c ft_check_errors.c
+SRC = philo_main.c ft_check_errors.c ft_atoi.c ft_calloc.c ft_man_structs.c
 
 OBJ = $(SRC:%.c=%.o)
 # ******************************************************************************* #
@@ -61,7 +61,7 @@ $(NAME): $(OBJ)
 	@echo "\033[1;93m * Making $(NAME) -->\033[1;97m\n"
 	@$(CC) $(OBJ) -o $(NAME)
 	@echo "\033[1;35m\n~ **************************************** ~\n"
-	@echo "  ~\t    Philosophers is ready!\t         ~\n"
+	@echo "  ~\t    Philosophers is ready!\t       ~\n"
 	@echo "~ **************************************** ~\n"
 #-------------------------------------------------------------#
 # ******************************************************************************* #

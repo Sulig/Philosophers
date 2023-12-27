@@ -8,7 +8,7 @@ Vas a aprender a como crear hilos y descubrirás los mutex.
 
 ***
 ## Contenido del repositorio:
-- [Subject](https://github.com/Sulig/Minitalk/blob/master/Minitalk.pdf)
+- [Subject](https://github.com/Sulig/Philosophers/blob/master/Philosophers.pdf)
 
 ***
 ## Comandos Esenciales:

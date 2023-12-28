@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/28 13:47:58 by sadoming         ###   ########.fr       */
+/*   Updated: 2023/12/28 19:50:19 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	char		*activity;
 	int			eating;
 	int			dead;
+	int			g_forks;
 	t_fork		l_fork;
 	t_fork		r_fork;
 }				t_philo;
@@ -57,7 +58,8 @@ size_t	ft_atos(const char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 
-void	ft_init_prog(t_program *t_prog, char **args, int argc);
+int		ft_free_prog(t_program *prog);
+int		ft_init_prog(t_program *t_prog, char **args, int argc);
 
 void	ft_print_forks_stat(t_fork *forks, size_t len);
 void	ft_print_philo_stat(t_philo *philo);

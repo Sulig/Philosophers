@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:43:12 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/28 13:48:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2023/12/28 19:49:43 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	ft_init_philo(t_philo *philo, char **args, int argc)
 	philo->time_to_sleep = ft_atos(args[4]);
 	philo->eating = 0;
 	philo->dead = 0;
-	philo->activity = "\033[0;34mdoing nothing right now ⚐\n";
+	philo->g_forks = 0;
+	philo->activity = "\033[0;34mis doing nothing right now ⚐\n";
 }
 
 static void	ft_init_forks(t_fork *forks, size_t len)
@@ -39,7 +40,18 @@ static void	ft_init_forks(t_fork *forks, size_t len)
 	}
 }
 
-void	ft_init_prog(t_program *t_prog, char **args, int argc)
+int	ft_free_prog(t_program *prog)
+{
+	if (prog->t_philos)
+		free(prog->t_philos);
+	if (prog->t_forks)
+		free(prog->t_forks);
+	prog->t_philos = NULL;
+	prog->t_forks = NULL;
+	return (0);
+}
+
+int	ft_init_prog(t_program *t_prog, char **args, int argc)
 {
 	size_t	philos;
 	size_t	i;
@@ -48,7 +60,11 @@ void	ft_init_prog(t_program *t_prog, char **args, int argc)
 	philos = ft_atos(args[1]);
 	t_prog->n_philos = philos;
 	t_prog->t_philos = ft_calloc(sizeof(t_philo), philos);
+	if (!t_prog->t_philos)
+		return (0);
 	t_prog->t_forks = ft_calloc(sizeof(t_fork), philos);
+	if (!t_prog->t_forks)
+		return (ft_free_prog(t_prog));
 	ft_init_forks(t_prog->t_forks, t_prog->n_philos);
 	while (i < philos)
 	{
@@ -61,4 +77,5 @@ void	ft_init_prog(t_program *t_prog, char **args, int argc)
 			t_prog->t_philos[i].r_fork = t_prog->t_forks[i + 1];
 		i++;
 	}
+	return (1);
 }

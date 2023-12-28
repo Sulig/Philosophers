@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:34:20 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/27 18:53:38 by sadoming         ###   ########.fr       */
+/*   Updated: 2023/12/28 13:48:26 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **args)
 	ft_init_prog(&t_prog, args, argc);
 	if (!t_prog.t_philos)
 		exit(1);
-	printf("OK\n");
+	ft_print_stat(&t_prog);
+	ft_print_forks_stat(t_prog.t_forks, t_prog.n_philos);
 	return (0);
 }

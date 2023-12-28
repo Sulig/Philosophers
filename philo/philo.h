@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/27 18:53:22 by sadoming         ###   ########.fr       */
+/*   Updated: 2023/12/28 13:47:58 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef struct s_fork
 {
-	int				stat;
+	int				grabed;
 	size_t			num;
 	pthread_mutex_t	*loker;
 }					t_fork;
@@ -34,6 +34,7 @@ typedef struct s_philo
 	size_t		cron_for_die;
 	size_t		time_to_eat;
 	size_t		time_to_sleep;
+	char		*activity;
 	int			eating;
 	int			dead;
 	t_fork		l_fork;
@@ -57,5 +58,9 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 
 void	ft_init_prog(t_program *t_prog, char **args, int argc);
+
+void	ft_print_forks_stat(t_fork *forks, size_t len);
+void	ft_print_philo_stat(t_philo *philo);
+void	ft_print_stat(t_program *t_prog);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2023/12/27 18:53:25 by sadoming         ###   ########.fr        #
+#    Updated: 2023/12/28 13:48:01 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ MAK = Makefile
 
 LIB = philo.h
 
-SRC = philo_main.c ft_check_errors.c ft_atoi.c ft_calloc.c ft_man_structs.c
+SRC = philo_main.c ft_check_errors.c ft_atoi.c ft_calloc.c ft_man_structs.c\
+	  ft_print_stat.c
 
 OBJ = $(SRC:%.c=%.o)
 # ******************************************************************************* #
@@ -100,7 +101,7 @@ clean:
 fclean: clean
 	@/bin/rm -f $(NAME)
 	@/bin/rm -frd $(NAME).dSYM
-	@find . -name ".DS_Store" -type f -delete
+	@find ../ -name ".DS_Store" -type f -delete
 	@echo "\033[1;34m All cleaned succesfully\033[1;97m\n"
 
 clear: fclean

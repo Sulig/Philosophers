@@ -13,6 +13,7 @@ Vas a aprender a como crear hilos y descubrirás los mutex.
 
 ***
 ## Contenido del repositorio:
+- Philosophers *in progress*
 - [Subject](https://github.com/Sulig/Philosophers/blob/master/Philosophers.pdf)
 
 ***

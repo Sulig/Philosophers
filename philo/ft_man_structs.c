@@ -6,13 +6,13 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:43:12 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/28 19:49:43 by sadoming         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:47:36 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_init_philo(t_philo *philo, char **args, int argc)
+static void	ft_init_philo(t_prog *prog, t_philo *philo, char **args, int argc)
 {
 	if (argc == 6)
 		philo->times_to_eat = ft_atoi(args[5]);
@@ -23,8 +23,11 @@ static void	ft_init_philo(t_philo *philo, char **args, int argc)
 	philo->time_to_sleep = ft_atos(args[4]);
 	philo->eating = 0;
 	philo->dead = 0;
+	philo->cron = 0;
+	philo->cron_to_die = 0;
 	philo->g_forks = 0;
-	philo->activity = "\033[0;34mis doing nothing right now ⚐\n";
+	philo->action = "\033[0;34mis doing nothing right now ⚐";
+	philo->prog_time = &prog->prog_time;
 }
 
 static void	ft_init_forks(t_fork *forks, size_t len)
@@ -40,7 +43,7 @@ static void	ft_init_forks(t_fork *forks, size_t len)
 	}
 }
 
-int	ft_free_prog(t_program *prog)
+int	ft_free_prog(t_prog *prog)
 {
 	if (prog->t_philos)
 		free(prog->t_philos);
@@ -48,10 +51,10 @@ int	ft_free_prog(t_program *prog)
 		free(prog->t_forks);
 	prog->t_philos = NULL;
 	prog->t_forks = NULL;
-	return (0);
+	return (prog->error);
 }
 
-int	ft_init_prog(t_program *t_prog, char **args, int argc)
+int	ft_init_prog(t_prog *t_prog, char **args, int argc)
 {
 	size_t	philos;
 	size_t	i;
@@ -68,7 +71,7 @@ int	ft_init_prog(t_program *t_prog, char **args, int argc)
 	ft_init_forks(t_prog->t_forks, t_prog->n_philos);
 	while (i < philos)
 	{
-		ft_init_philo(&t_prog->t_philos[i], args, argc);
+		ft_init_philo(t_prog, &t_prog->t_philos[i], args, argc);
 		t_prog->t_philos[i].num = i + 1;
 		t_prog->t_philos[i].l_fork = t_prog->t_forks[i];
 		if (i + 1 == philos)

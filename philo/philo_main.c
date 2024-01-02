@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:34:20 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/29 19:47:29 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/02 19:49:11 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	ft_start_pthreads(t_prog *prog)
 	t_philo	*philo;
 
 	i = 0;
+	prog->time = 0;
 	while (i < prog->n_philos)
 	{
 		philo = &prog->t_philos[i];
@@ -27,10 +28,13 @@ static int	ft_start_pthreads(t_prog *prog)
 			prog->error = 1;
 			return (0);
 		}
+		else
+			printf("\033[1;36mN.%zu Start living\n", philo->num);
 		i++;
 	}
-	prog->error = 0;
-	prog->prog_time = 0;
+	prog->error = pthread_create(&prog->pthread, NULL, &ft_loop_time, prog);
+	if (prog->error)
+		return (0);
 	return (1);
 }
 
@@ -40,6 +44,9 @@ static int	ft_join_pthreads(t_prog *prog)
 	t_philo	*philo;
 
 	i = 0;
+	prog->error = pthread_join(prog->pthread, NULL);
+	if (prog->error)
+		return (0);
 	while (i < prog->n_philos)
 	{
 		philo = &prog->t_philos[i];
@@ -49,9 +56,10 @@ static int	ft_join_pthreads(t_prog *prog)
 			prog->error = 1;
 			return (0);
 		}
+		else
+			printf("\033[1;36mN.%zu Finish\n", philo->num);
 		i++;
 	}
-	prog->error = 0;
 	return (1);
 }
 

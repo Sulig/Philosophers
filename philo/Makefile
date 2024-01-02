@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2023/12/29 19:48:06 by sadoming         ###   ########.fr        #
+#    Updated: 2024/01/02 19:49:27 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ MAK = Makefile
 LIB = philo.h
 
 SRC = philo_main.c ft_check_errors.c ft_atoi.c ft_calloc.c ft_man_structs.c\
-	  ft_print_stat.c
+	  ft_print_stat.c ft_accions.c
 
 OBJ = $(SRC:%.c=%.o)
 # ******************************************************************************* #

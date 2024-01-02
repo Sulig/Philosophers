@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/29 19:47:41 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/02 19:49:21 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	*ft_print_action(void *arg)
 
 	philo = arg;
 	time = philo->prog_time;
-	printf("\033[1;37m %lli  ", *time);
-	printf("\033[1;37m%zu %s\n", philo->num, philo->action);
+	while (*time != -1)
+	{
+		printf("\033[1;37m %lli  ", *time);
+		printf("\033[1;37m%zu %s\n", philo->num, philo->action);
+	}
 	return (NULL);
 }
 

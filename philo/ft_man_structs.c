@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:43:12 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/29 19:47:36 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/02 18:41:07 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_init_philo(t_prog *prog, t_philo *philo, char **args, int argc)
 	philo->cron_to_die = 0;
 	philo->g_forks = 0;
 	philo->action = "\033[0;34mis doing nothing right now ⚐";
-	philo->prog_time = &prog->prog_time;
+	philo->prog_time = &prog->time;
 }
 
 static void	ft_init_forks(t_fork *forks, size_t len)

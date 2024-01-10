@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 18:32:16 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/02 19:49:15 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:25:34 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,16 @@ void	*ft_loop_time(void *arg)
 	}
 	prog->time = -1;
 	return (NULL);
+}
+
+void	*ft_philo_routine(void *arg)
+{
+	t_philo	philo;
+
+	philo = arg;
+	while (!philo.dead)
+	{
+		//acctions
+		usleep(3000);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:34:20 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/10 14:25:37 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/10 20:31:37 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,27 @@ static int	ft_join_pthreads(t_prog *prog)
 		i++;
 	}
 	return (1);
+}
+
+void	*ft_loop_time(void *arg)
+{
+	t_prog	*prog;
+	size_t	num;
+
+	prog = arg;
+	while (prog->time < 10)
+	{
+		usleep(1);
+		num = 0;
+		while (num < prog->n_philos && !prog->t_philos[num].dead)
+		{
+			prog->t_philos[num].cron_to_die++;
+			num++;
+		}
+		prog->time++;
+	}
+	prog->time = -1;
+	return (NULL);
 }
 
 int	main(int argc, char **args)

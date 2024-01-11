@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/10 20:31:40 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:20:46 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ typedef struct s_prog
 	int			error;
 	int			finish;
 	size_t		n_philos;
-	t_philo		*t_philos;
-	t_fork		*t_forks;
+	t_philo		*philos;
+	t_fork		*forks;
 	long long	time;
 	pthread_t	pthread;
 }				t_prog;
@@ -72,9 +72,10 @@ int		ft_init_prog(t_prog *t_prog, char **args, int argc);
 
 /* ACCIONS */
 void	*ft_loop_time(void *arg);
+void	*ft_routine(void *arg);
 
-/* PRINT STATUS |DEBUGG| */
-void	*ft_print_action(void *philo);
+/* PRINT STATUS && DEBUGG */
+void	ft_print_action(t_philo *philo);
 void	ft_print_forks_stat(t_fork *forks, size_t len);
 void	ft_print_philo_stat(t_philo *philo);
 void	ft_print_stat(t_prog *t_prog);

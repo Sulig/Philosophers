@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:34:20 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/10 20:31:37 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:20:41 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ static int	ft_start_pthreads(t_prog *prog)
 
 	i = 0;
 	prog->time = 0;
+	prog->p_dead = 0;
+	prog->finish = 0;
 	while (i < prog->n_philos)
 	{
-		philo = &prog->t_philos[i];
-		if (pthread_create(&philo->p_live, NULL, &ft_print_action, philo))
+		philo = &prog->philos[i];
+		if (pthread_create(&philo->p_live, NULL, &ft_routine, philo))
 			return (ft_write_error(prog, 0));
 		else
 			printf("\033[1;36mN.%zu Start living\n", philo->num);
@@ -55,7 +57,7 @@ static int	ft_join_pthreads(t_prog *prog)
 		return (ft_write_error(prog, 1));
 	while (i < prog->n_philos)
 	{
-		philo = &prog->t_philos[i];
+		philo = &prog->philos[i];
 		if (pthread_join(philo->p_live, NULL))
 			return (ft_write_error(prog, 1));
 		else
@@ -71,18 +73,18 @@ void	*ft_loop_time(void *arg)
 	size_t	num;
 
 	prog = arg;
-	while (prog->time < 10)
+	while (!prog->p_dead && !prog->finish)
 	{
-		usleep(1);
 		num = 0;
-		while (num < prog->n_philos && !prog->t_philos[num].dead)
+		while (num < prog->n_philos)
 		{
-			prog->t_philos[num].cron_to_die++;
+			if (prog->philos[num].cron_to_die == prog->philos[num].time_to_die)
+				prog->p_dead = 1;
 			num++;
 		}
+		usleep(1000);
 		prog->time++;
 	}
-	prog->time = -1;
 	return (NULL);
 }
 

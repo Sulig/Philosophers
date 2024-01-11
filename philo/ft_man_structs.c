@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:43:12 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/10 20:28:28 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:20:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static void	ft_init_forks(t_fork *forks, size_t len)
 
 int	ft_free_prog(t_prog *prog)
 {
-	if (prog->t_philos)
-		free(prog->t_philos);
-	if (prog->t_forks)
-		free(prog->t_forks);
-	prog->t_philos = NULL;
-	prog->t_forks = NULL;
+	if (prog->philos)
+		free(prog->philos);
+	if (prog->forks)
+		free(prog->forks);
+	prog->philos = NULL;
+	prog->forks = NULL;
 	return (prog->error);
 }
 
@@ -62,22 +62,22 @@ int	ft_init_prog(t_prog *t_prog, char **args, int argc)
 	i = 0;
 	philos = ft_atos(args[1]);
 	t_prog->n_philos = philos;
-	t_prog->t_philos = ft_calloc(sizeof(t_philo), philos);
-	if (!t_prog->t_philos)
+	t_prog->philos = ft_calloc(sizeof(t_philo), philos);
+	if (!t_prog->philos)
 		return (0);
-	t_prog->t_forks = ft_calloc(sizeof(t_fork), philos);
-	if (!t_prog->t_forks)
+	t_prog->forks = ft_calloc(sizeof(t_fork), philos);
+	if (!t_prog->forks)
 		return (ft_free_prog(t_prog));
-	ft_init_forks(t_prog->t_forks, t_prog->n_philos);
+	ft_init_forks(t_prog->forks, t_prog->n_philos);
 	while (i < philos)
 	{
-		ft_init_philo(t_prog, &t_prog->t_philos[i], args, argc);
-		t_prog->t_philos[i].num = i + 1;
-		t_prog->t_philos[i].l_fork = t_prog->t_forks[i];
+		ft_init_philo(t_prog, &t_prog->philos[i], args, argc);
+		t_prog->philos[i].num = i + 1;
+		t_prog->philos[i].l_fork = t_prog->forks[i];
 		if (i + 1 == philos)
-			t_prog->t_philos[i].r_fork = t_prog->t_forks[0];
+			t_prog->philos[i].r_fork = t_prog->forks[0];
 		else
-			t_prog->t_philos[i].r_fork = t_prog->t_forks[i + 1];
+			t_prog->philos[i].r_fork = t_prog->forks[i + 1];
 		i++;
 	}
 	return (1);

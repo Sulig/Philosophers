@@ -6,25 +6,19 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/10 20:31:31 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/11 19:54:01 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*ft_print_action(void *arg)
+void	ft_print_action(t_philo *philo)
 {
-	t_philo		*philo;
 	long long	*time;
 
-	philo = arg;
 	time = philo->prog_time;
-	while (*time != -1)
-	{
-		printf("\033[1;37m %lli  ", *time);
-		printf("\033[1;37m%zu %s\n", philo->num, philo->action);
-	}
-	return (NULL);
+	printf("\033[1;37m %lli  ", *time);
+	printf("\033[1;37m%zu %s\n", philo->num, philo->action);
 }
 
 void	ft_print_forks_stat(t_fork *forks, size_t len)
@@ -54,15 +48,12 @@ void	ft_print_philo_stat(t_philo *philo)
 		printf("\033[1;31mDEAD\033[1;37m\n");
 	else
 		printf("\033[1;32mALIVE\033[0;37m\n");
-	printf("\n Forks: \t~ & Graved forks |%i|\n", philo->g_forks);
+	printf("\n Forks & Graved forks |%i|\n", philo->g_forks);
 	fork = philo->l_fork.num;
 	printf(" On left, philo has N.|%zu| fork\n", fork);
 	fork = philo->r_fork.num;
 	printf(" On right, philo has N.|%zu| fork\n", fork);
-	printf("\n Time Routine:\n");
-	printf(" * Time to die: |%zu|\n", philo->time_to_die);
-	printf(" * Time to eat: |%zu|\n", philo->time_to_eat);
-	printf(" * Time to sleep: |%zu|\n", philo->time_to_sleep);
+	printf(" * Live time:   |%zu|\n", philo->cron_to_die);
 	printf("\n Philosopher must eat");
 	printf(" |%ld| times\n", philo->times_to_eat);
 	printf("\n Philosofer Action:\n");
@@ -81,8 +72,8 @@ void	ft_print_stat(t_prog *t_prog)
 	printf("~~~~~~~~~~~~~~~\n\n");
 	while (i < t_prog->n_philos)
 	{
-		deaths += t_prog->t_philos[i].dead;
-		ft_print_philo_stat(&t_prog->t_philos[i]);
+		deaths += t_prog->philos[i].dead;
+		ft_print_philo_stat(&t_prog->philos[i]);
 		printf("\033[1;35m~~~~~~~~~~~~~~~~~\n\033[1;37m\n");
 		i++;
 	}

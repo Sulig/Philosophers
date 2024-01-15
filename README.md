@@ -29,7 +29,7 @@ Vas a aprender a como crear hilos y descubrirás los mutex.
 1 Segundo -> 1000 milisegundos
 1 milisegundo -> 1000 microsegundos
 
-''' c
+``` c
 size_t    get_current_time(void)
 {
     struct timeval    time;
@@ -38,4 +38,4 @@ size_t    get_current_time(void)
         write(2, "gettimeofday() error\n", 22);
     return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
-'''
+```

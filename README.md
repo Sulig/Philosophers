@@ -7,7 +7,7 @@
 [![Activity](https://img.shields.io/github/last-commit/Sulig/Philosophers?color=orange&label=Last%20Commit&style=flat)](https://github.com/Sulig/Philosophers)
  
 ***
-Resumen:
+## Resumen:
 En este proyecto, aprenderás los principios básico de hilar un proceso.
 Vas a aprender a como crear hilos y descubrirás los mutex.
 

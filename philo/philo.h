@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/11 20:20:46 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:18:01 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ typedef struct s_philo
 {
 	size_t		num;
 	long		times_to_eat;
-	size_t		cron;
-	size_t		cron_to_die;
-	void		*prog_time;
 	size_t		time_to_die;
 	size_t		time_to_eat;
 	size_t		time_to_sleep;
@@ -48,20 +45,19 @@ typedef struct s_philo
 
 typedef struct s_prog
 {
-	int			p_dead;
 	int			error;
-	int			finish;
+	int			dead_fl;
+	int			end_flag;
 	size_t		n_philos;
 	t_philo		*philos;
 	t_fork		*forks;
-	long long	time;
-	pthread_t	pthread;
+	pthread_t	monitor;
 }				t_prog;
 
 /* UTILS */
 int		ft_atoi(const char *str);
-long	ft_atol(const char *str);
 size_t	ft_atos(const char *str);
+size_t	ft_gettime(void);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 
@@ -71,7 +67,6 @@ int		ft_free_prog(t_prog *prog);
 int		ft_init_prog(t_prog *t_prog, char **args, int argc);
 
 /* ACCIONS */
-void	*ft_loop_time(void *arg);
 void	*ft_routine(void *arg);
 
 /* PRINT STATUS && DEBUGG */

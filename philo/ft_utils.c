@@ -1,49 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 12:57:19 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/27 18:43:18 by sadoming         ###   ########.fr       */
+/*   Created: 2024/01/12 15:14:19 by sadoming          #+#    #+#             */
+/*   Updated: 2024/01/15 19:44:26 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	cnt;
+	char	*dest;
+
+	dest = (char *) s;
+	cnt = 0;
+	while (cnt < n)
+	{
+		dest[cnt] = '\0';
+		cnt++;
+	}
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*call;
+
+	call = malloc(count * size);
+	if (!call)
+		return (NULL);
+	ft_bzero(call, count * size);
+	return (call);
+}
 
 int	ft_atoi(const char *str)
 {
 	int		cnt;
 	int		sign;
 	int		find;
-
-	find = '\0';
-	cnt = -1;
-	sign = 1;
-	while (str[++cnt] < 33)
-		if ((str[cnt] < 9 || str[cnt] > 13) && str[cnt] != ' ')
-			return ('\0');
-	if (str[cnt] == '-' || str[cnt] == '+')
-	{
-		if (str[cnt] == '-')
-			sign *= -1;
-		cnt++;
-	}
-	while (str[cnt] >= '0' && str[cnt] <= '9')
-	{
-		find *= 10;
-		find += str[cnt] - '0';
-		cnt++;
-	}
-	return (find * sign);
-}
-
-long	ft_atol(const char *str)
-{
-	long	cnt;
-	long	sign;
-	long	find;
 
 	find = '\0';
 	cnt = -1;
@@ -85,4 +83,21 @@ size_t	ft_atos(const char *str)
 		cnt++;
 	}
 	return (find);
+}
+
+/*
+ * 1 Sec = 1000 Milisec
+ * 1 Milisec = 1000 Microseg
+ * tv_usec is in microseg, so / 1000 is in miliseg
+*/
+size_t    ft_gettime(void)
+{
+    struct timeval	time;
+
+    if (gettimeofday(&time, NULL) == -1)
+	{
+        write(2, "gettimeofday() error\n", 22);
+		return (-1);
+	}
+    return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

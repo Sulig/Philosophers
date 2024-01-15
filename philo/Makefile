@@ -6,13 +6,13 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2024/01/11 20:20:33 by sadoming         ###   ########.fr        #
+#    Updated: 2024/01/15 20:18:20 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-# Default arguments on make run
+# Default arguments for make run
 DEF = 2 310 200 100 1 
 # ------------------ #
 # Flags:
@@ -26,8 +26,8 @@ MAK = Makefile
 
 LIB = philo.h
 
-SRC = philo_main.c ft_check_errors.c ft_atoi.c ft_calloc.c ft_man_structs.c\
-	  ft_print_stat.c ft_accions.c ft_more.c
+SRC = philo_main.c ft_check_errors.c ft_man_structs.c\
+	  ft_print_stat.c ft_utils.c
 
 OBJ = $(SRC:%.c=%.o)
 # ******************************************************************************* #

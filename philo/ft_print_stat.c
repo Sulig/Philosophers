@@ -6,11 +6,19 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/16 17:29:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/16 20:13:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_print_action(t_philo *philo)
+{
+	philo->live_time = ft_gettime() - philo->start_time;
+	//lock mutex
+	printf("\033[1;37m%zu %zu %s\n", philo->live_time, philo->num, philo->action);
+	//unlock mutex
+}
 
 void	ft_print_forks_stat(t_fork *forks, size_t len)
 {

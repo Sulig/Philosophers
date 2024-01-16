@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/16 17:10:24 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/16 20:20:54 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,37 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	size_t		num;
-	long		times_to_eat;
-	size_t		start_time;
-	size_t		live_time;
-	size_t		time_to_die;
-	size_t		time_to_eat;
-	size_t		time_to_sleep;
-	size_t		time_to_think;
-	char		*action;
-	int			eating;
-	int			dead;
-	int			g_forks;
-	t_fork		l_fork;
-	t_fork		r_fork;
-	pthread_t	p_live;
+	size_t			num;
+	long			times_to_eat;
+	size_t			start_time;
+	size_t			last_eat;
+	size_t			live_time;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	size_t			time_to_think;
+	char			*action;
+	int				eating;
+	int				dead;
+	int				g_forks;
+	t_fork			l_fork;
+	t_fork			r_fork;
+	pthread_t		p_live;
+	pthread_mutex_t	*print;
 }				t_philo;
 
 typedef struct s_prog
 {
-	int			error;
-	int			dead_flg;
-	int			end_flag;
-	size_t		n_philos;
-	size_t		*values;
-	t_philo		*philos;
-	t_fork		*forks;
-	pthread_t	monitor;
+	int				error;
+	int				dead_flg;
+	int				end_flag;
+	size_t			end_eating;
+	size_t			n_philos;
+	size_t			*values;
+	t_philo			*philos;
+	t_fork			*forks;
+	pthread_t		monitor;
+	pthread_mutex_t	print;
 }				t_prog;
 
 /* UTILS */
@@ -68,8 +72,18 @@ void	*ft_calloc(size_t count, size_t size);
 int		ft_check_all(char **args);
 int		ft_free_prog(t_prog *prog, int error);
 int		ft_init_prog(t_prog *t_prog, char **args, int argc);
+int		ft_check_eating_times(t_prog *prog);
+int		ft_kill_philo(t_philo *philo);
+int		ft_check_if_philo_dead(t_prog *prog);
+
+/* PTHREADS */
+int		ft_start_pthreads(t_prog *prog);
+int		ft_join_pthreads(t_prog *prog);
+void	*ft_observer(void *arg);
+void	*ft_routine(void *arg);
 
 /* PRINT STATUS && DEBUGG */
+void	ft_print_action(t_philo *philo);
 void	ft_print_forks_stat(t_fork *forks, size_t len);
 void	ft_print_philo_stat(t_philo *philo);
 void	ft_print_stat(t_prog *t_prog);

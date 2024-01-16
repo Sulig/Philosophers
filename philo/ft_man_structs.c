@@ -5,45 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/27 16:43:12 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/11 20:20:27 by sadoming         ###   ########.fr       */
+/*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
+/*   Updated: 2024/01/16 17:28:59 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_init_philo(t_prog *prog, t_philo *philo, char **args, int argc)
-{
-	if (argc == 6)
-		philo->times_to_eat = ft_atoi(args[5]);
-	else
-		philo->times_to_eat = -1;
-	philo->time_to_die = ft_atos(args[2]);
-	philo->time_to_eat = ft_atos(args[3]);
-	philo->time_to_sleep = ft_atos(args[4]);
-	philo->eating = 0;
-	philo->dead = 0;
-	philo->cron = 0;
-	philo->cron_to_die = 0;
-	philo->g_forks = 0;
-	philo->action = "\033[0;34mis doing nothing right now ⚐";
-	philo->prog_time = &prog->time;
-}
-
-static void	ft_init_forks(t_fork *forks, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		forks[i].grabed = 0;
-		forks[i].num = i + 1;
-		i++;
-	}
-}
-
-int	ft_free_prog(t_prog *prog)
+int	ft_free_prog(t_prog *prog, int error)
 {
 	if (prog->philos)
 		free(prog->philos);
@@ -51,34 +20,78 @@ int	ft_free_prog(t_prog *prog)
 		free(prog->forks);
 	prog->philos = NULL;
 	prog->forks = NULL;
+	prog->error = error;
 	return (prog->error);
 }
 
-int	ft_init_prog(t_prog *t_prog, char **args, int argc)
+static int	ft_init_callocs(t_prog *prog, char **args, int argc)
 {
-	size_t	philos;
+	int		i;
+
+	i = -1;
+	prog->values = ft_calloc(sizeof(size_t), argc);
+	if (!prog->values)
+		return (ft_free_prog(prog, 1));
+	while (++i < argc - 1)
+		prog->values[i] = ft_atos(args[i + 1]);
+	prog->philos = ft_calloc(sizeof(t_philo), prog->values[0]);
+	if (!prog->philos)
+		return (ft_free_prog(prog, 1));
+	prog->forks = ft_calloc(sizeof(t_fork), prog->values[0]);
+	if (!prog->forks)
+		return (ft_free_prog(prog, 1));
+	prog->error = 0;
+	prog->dead_flg = 0;
+	prog->end_flag = 0;
+	prog->n_philos = prog->values[0];
+	return (1);
+}
+
+static void	ft_init_all(t_prog *prog)
+{
+	size_t	i;
+	char	*acction;
+
+	i = 0;
+	acction = "\033[0;34mis doing nothing right now ⚐";
+	while (i < prog->n_philos)
+	{
+		prog->forks[i].grabed = 0;
+		prog->philos[i].eating = 0;
+		prog->philos[i].dead = 0;
+		prog->philos[i].g_forks = 0;
+		prog->philos[i].action = acction;
+		prog->philos[i].start_time = ft_gettime();
+		prog->philos[i].live_time = ft_gettime() - prog->philos[i].start_time;
+		prog->philos[i].l_fork = prog->forks[i];
+		if (i + 1 == prog->n_philos)
+			prog->philos[i].r_fork = prog->forks[0];
+		else
+			prog->philos[i].r_fork = prog->forks[i + 1];
+		i++;
+	}
+}
+
+int	ft_init_prog(t_prog *prog, char **args, int argc)
+{
 	size_t	i;
 
 	i = 0;
-	philos = ft_atos(args[1]);
-	t_prog->n_philos = philos;
-	t_prog->philos = ft_calloc(sizeof(t_philo), philos);
-	if (!t_prog->philos)
-		return (0);
-	t_prog->forks = ft_calloc(sizeof(t_fork), philos);
-	if (!t_prog->forks)
-		return (ft_free_prog(t_prog));
-	ft_init_forks(t_prog->forks, t_prog->n_philos);
-	while (i < philos)
+	if (!ft_init_callocs(prog, args, argc))
+		return (ft_free_prog(prog, 1));
+	while (i < prog->n_philos)
 	{
-		ft_init_philo(t_prog, &t_prog->philos[i], args, argc);
-		t_prog->philos[i].num = i + 1;
-		t_prog->philos[i].l_fork = t_prog->forks[i];
-		if (i + 1 == philos)
-			t_prog->philos[i].r_fork = t_prog->forks[0];
+		prog->philos[i].num = i + 1;
+		prog->forks[i].num = prog->philos[i].num;
+		if (argc == 6)
+			prog->philos[i].times_to_eat = prog->values[4];
 		else
-			t_prog->philos[i].r_fork = t_prog->forks[i + 1];
+			prog->philos[i].times_to_eat = -1;
+		prog->philos[i].time_to_die = prog->values[1];
+		prog->philos[i].time_to_eat = prog->values[2];
+		prog->philos[i].time_to_sleep = prog->values[3];
 		i++;
 	}
+	ft_init_all(prog);
 	return (1);
 }

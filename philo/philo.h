@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/15 20:18:01 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:10:24 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_philo
 {
 	size_t		num;
 	long		times_to_eat;
+	size_t		start_time;
+	size_t		live_time;
 	size_t		time_to_die;
 	size_t		time_to_eat;
 	size_t		time_to_sleep;
@@ -46,9 +48,10 @@ typedef struct s_philo
 typedef struct s_prog
 {
 	int			error;
-	int			dead_fl;
+	int			dead_flg;
 	int			end_flag;
 	size_t		n_philos;
+	size_t		*values;
 	t_philo		*philos;
 	t_fork		*forks;
 	pthread_t	monitor;
@@ -63,14 +66,10 @@ void	*ft_calloc(size_t count, size_t size);
 
 /* CHECK, INIT & FREE */
 int		ft_check_all(char **args);
-int		ft_free_prog(t_prog *prog);
+int		ft_free_prog(t_prog *prog, int error);
 int		ft_init_prog(t_prog *t_prog, char **args, int argc);
 
-/* ACCIONS */
-void	*ft_routine(void *arg);
-
 /* PRINT STATUS && DEBUGG */
-void	ft_print_action(t_philo *philo);
 void	ft_print_forks_stat(t_fork *forks, size_t len);
 void	ft_print_philo_stat(t_philo *philo);
 void	ft_print_stat(t_prog *t_prog);

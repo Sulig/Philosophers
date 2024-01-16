@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:14:19 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/15 19:44:26 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:22:50 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ size_t	ft_atos(const char *str)
  * 1 Sec = 1000 Milisec
  * 1 Milisec = 1000 Microseg
  * tv_usec is in microseg, so / 1000 is in miliseg
-*/
-size_t    ft_gettime(void)
+ */
+size_t	ft_gettime(void)
 {
-    struct timeval	time;
+	struct timeval	time;
 
-    if (gettimeofday(&time, NULL) == -1)
+	if (gettimeofday(&time, NULL) == -1)
 	{
-        write(2, "gettimeofday() error\n", 22);
+		write(2, "gettimeofday() error\n", 22);
 		return (-1);
 	}
-    return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

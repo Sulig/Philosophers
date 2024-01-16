@@ -6,20 +6,11 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/11 19:54:01 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:29:06 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_print_action(t_philo *philo)
-{
-	long long	*time;
-
-	time = philo->prog_time;
-	printf("\033[1;37m %lli  ", *time);
-	printf("\033[1;37m%zu %s\n", philo->num, philo->action);
-}
 
 void	ft_print_forks_stat(t_fork *forks, size_t len)
 {
@@ -48,12 +39,12 @@ void	ft_print_philo_stat(t_philo *philo)
 		printf("\033[1;31mDEAD\033[1;37m\n");
 	else
 		printf("\033[1;32mALIVE\033[0;37m\n");
-	printf("\n Forks & Graved forks |%i|\n", philo->g_forks);
+	printf("\n Graved forks = %i\tForks ->\n", philo->g_forks);
 	fork = philo->l_fork.num;
-	printf(" On left, philo has N.|%zu| fork\n", fork);
+	printf(" On left, philo has N.%zu fork\n", fork);
 	fork = philo->r_fork.num;
-	printf(" On right, philo has N.|%zu| fork\n", fork);
-	printf(" * Live time:   |%zu|\n", philo->cron_to_die);
+	printf(" On right, philo has N.%zu fork\n", fork);
+	printf(" * Live time:   |%zu|\n", philo->live_time);
 	printf("\n Philosopher must eat");
 	printf(" |%ld| times\n", philo->times_to_eat);
 	printf("\n Philosofer Action:\n");

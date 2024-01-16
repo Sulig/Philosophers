@@ -6,12 +6,13 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:34:20 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/15 20:18:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:05:30 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
 static int	ft_write_error(t_prog *prog, int num)
 {
 	prog->error = 1;
@@ -28,9 +29,6 @@ static int	ft_start_pthreads(t_prog *prog)
 	t_philo	*philo;
 
 	i = 0;
-	prog->time = 0;
-	prog->p_dead = 0;
-	prog->finish = 0;
 	if (pthread_create(&prog->monitor, NULL, &ft_observer, prog))
 		return (ft_write_error(prog, 0));
 	while (i < prog->n_philos)
@@ -66,10 +64,10 @@ static int	ft_join_pthreads(t_prog *prog)
 	}
 	return (1);
 }
-
+*/
 int	main(int argc, char **args)
 {
-	t_prog	t_prog;
+	t_prog	prog;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -77,12 +75,15 @@ int	main(int argc, char **args)
 		return (1);
 	}
 	if (!ft_check_all(args))
-		return (ft_free_prog(&t_prog));
-	if (!ft_init_prog(&t_prog, args, argc))
-		return (ft_free_prog(&t_prog));
-	if (!ft_start_pthreads(&t_prog))
-		return (ft_free_prog(&t_prog));
-	if (!ft_join_pthreads(&t_prog))
-		return (ft_free_prog(&t_prog));
-	return (ft_free_prog(&t_prog));
+		return (ft_free_prog(&prog, 1));
+	if (!ft_init_prog(&prog, args, argc))
+		return (ft_free_prog(&prog, 1));
+	ft_print_stat(&prog);
+	/*
+	if (!ft_start_pthreads(&prog))
+		return (ft_free_prog(&prog));
+	if (!ft_join_pthreads(&prog))
+		return (ft_free_prog(&prog));
+	*/
+	return (ft_free_prog(&prog, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/16 20:20:58 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:22:29 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,16 @@ int	ft_free_prog(t_prog *prog, int error)
 		free(prog->philos);
 	if (prog->forks)
 		free(prog->forks);
+	if (prog->values)
+		free(prog->values);
 	prog->philos = NULL;
 	prog->forks = NULL;
+	prog->values = NULL;
 	prog->error = error;
+	if (!prog->error)
+		prog->error = ft_destroy_mutex(prog);
+	else if (prog->aliv_mutex)
+		ft_destroy_mutex(prog);
 	return (prog->error);
 }
 
@@ -43,6 +50,7 @@ static int	ft_init_callocs(t_prog *prog, char **args, int argc)
 	prog->error = 0;
 	prog->dead_flg = 0;
 	prog->end_flag = 0;
+	prog->aliv_mutex = 0;
 	prog->n_philos = prog->values[0];
 	return (1);
 }
@@ -95,5 +103,5 @@ int	ft_init_prog(t_prog *prog, char **args, int argc)
 		i++;
 	}
 	ft_init_all(prog);
-	return (1);
+	return (ft_init_mutex(prog));
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:28:03 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/16 20:20:44 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:22:07 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,50 @@ static int	ft_write_error(t_prog *prog, int num)
 	prog->error = 1;
 	if (num == 0)
 		write(2, "Couldn't create a thread!\n", 26);
-	if (num == 1)
+	else if (num == 1)
 		write(2, "Couldn't join the thread!\n", 26);
+	else if (num == 2)
+		write(2, "Couldn't initiate a mutex!\n", 27);
+	else if (num == 3)
+	{
+		write(2, "Error when destroy a mutex!\n", 28);
+		return (prog->error);
+	}
+	else
+		write(2, "An undefined error ocurred!\n", 28);
 	return (0);
 }
 
-void	*ft_routine(void *arg)
+int	ft_init_mutex(t_prog *prog)
 {
-	t_philo	*philo;
+	size_t	i;
 
-	philo = arg;
-	while (!philo->dead)
+	i = 0;
+	if (pthread_mutex_init(&prog->print, NULL) != 0)
+		return (ft_write_error(prog, 2));
+	prog->aliv_mutex++;
+	while (i < prog->n_philos)
 	{
-		ft_print_action(philo);
-		philo->dead = ft_kill_philo(philo);
-		//Routine
+		if (!pthread_mutex_init(&prog->forks[i].locker, NULL))
+			prog->aliv_mutex++;
+		else
+			return (ft_write_error(prog, 2));
+		i++;
 	}
-	philo->action = "\033[1;31mis DEAD ☠️  ";
-	ft_print_action(philo);
-	//unlock mutex?
-	//unlock forks?
-	return (NULL);
+	return (1);
+}
+
+int	ft_destroy_mutex(t_prog *prog)
+{
+	size_t	i;
+
+	i = 0;
+	if (!prog->aliv_mutex)
+		return (0);
+	if (pthread_mutex_destroy(&prog->print) != 0)
+		return (ft_write_error(prog, 3));
+	prog->aliv_mutex--;
+	return (prog->error);
 }
 
 int	ft_start_pthreads(t_prog *prog)

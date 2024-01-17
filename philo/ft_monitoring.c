@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:04:14 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/16 20:20:40 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/17 11:48:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ int	ft_check_eating_times(t_prog *prog)
 	while (i < prog->n_philos)
 	{
 		if (!prog->philos[i].times_to_eat)
-		{
 			prog->end_eating++;
-			break ;
-		}
 		i++;
 	}
 	if (prog->end_eating == prog->n_philos)

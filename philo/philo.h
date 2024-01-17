@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/16 20:20:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:22:43 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_fork
 {
 	int				grabed;
 	size_t			num;
-	pthread_mutex_t	*loker;
+	pthread_mutex_t	locker;
 }					t_fork;
 
 typedef struct s_philo
@@ -54,9 +54,10 @@ typedef struct s_prog
 	int				end_flag;
 	size_t			end_eating;
 	size_t			n_philos;
+	size_t			aliv_mutex;
 	size_t			*values;
+	t_fork			*forks;		
 	t_philo			*philos;
-	t_fork			*forks;
 	pthread_t		monitor;
 	pthread_mutex_t	print;
 }				t_prog;
@@ -77,6 +78,8 @@ int		ft_kill_philo(t_philo *philo);
 int		ft_check_if_philo_dead(t_prog *prog);
 
 /* PTHREADS */
+int		ft_init_mutex(t_prog *prog);
+int		ft_destroy_mutex(t_prog *prog);
 int		ft_start_pthreads(t_prog *prog);
 int		ft_join_pthreads(t_prog *prog);
 void	*ft_observer(void *arg);

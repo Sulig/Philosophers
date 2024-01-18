@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/17 14:22:43 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:22:41 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct s_philo
 	char			*action;
 	int				eating;
 	int				dead;
-	int				g_forks;
+	int				lf_grab;
+	int				rf_grab;
 	t_fork			l_fork;
 	t_fork			r_fork;
 	pthread_t		p_live;

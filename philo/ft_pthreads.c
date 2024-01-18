@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:28:03 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/17 14:22:07 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:22:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ int	ft_init_mutex(t_prog *prog)
 
 int	ft_destroy_mutex(t_prog *prog)
 {
-	size_t	i;
-
-	i = 0;
 	if (!prog->aliv_mutex)
 		return (0);
 	if (pthread_mutex_destroy(&prog->print) != 0)

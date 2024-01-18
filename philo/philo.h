@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/18 14:22:41 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/18 20:13:40 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ typedef struct s_philo
 	int				dead;
 	int				lf_grab;
 	int				rf_grab;
-	t_fork			l_fork;
-	t_fork			r_fork;
+	int				lf_num;
+	int				rf_num;
+	t_fork			*forks;
 	pthread_t		p_live;
 	pthread_mutex_t	*print;
 }				t_philo;
@@ -76,7 +77,6 @@ int		ft_free_prog(t_prog *prog, int error);
 int		ft_init_prog(t_prog *t_prog, char **args, int argc);
 int		ft_check_eating_times(t_prog *prog);
 int		ft_kill_philo(t_philo *philo);
-int		ft_check_if_philo_dead(t_prog *prog);
 
 /* PTHREADS */
 int		ft_init_mutex(t_prog *prog);

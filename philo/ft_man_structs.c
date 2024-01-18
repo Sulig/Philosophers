@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/18 12:13:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:20:29 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ static void	ft_init_all(t_prog *prog)
 		prog->philos[i].start_time = ft_gettime();
 		prog->philos[i].live_time = ft_gettime() - prog->philos[i].start_time;
 		prog->philos[i].last_eat = prog->philos[i].live_time;
-		prog->philos[i].l_fork = prog->forks[i];
+		prog->philos[i].forks = prog->forks;
+		prog->philos[i].lf_num = i;
 		if (i + 1 == prog->n_philos)
-			prog->philos[i].r_fork = prog->forks[0];
+			prog->philos[i].rf_num = 0;
 		else
-			prog->philos[i].r_fork = prog->forks[i + 1];
+			prog->philos[i].rf_num = i + 1;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:28:03 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/18 14:22:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/18 20:13:23 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	ft_destroy_mutex(t_prog *prog)
 	if (pthread_mutex_destroy(&prog->print) != 0)
 		return (ft_write_error(prog, 3));
 	prog->aliv_mutex--;
+	prog->error = 0;
 	return (prog->error);
 }
 
@@ -87,12 +88,17 @@ int	ft_join_pthreads(t_prog *prog)
 	prog->error = pthread_join(prog->monitor, NULL);
 	if (prog->error)
 		return (ft_write_error(prog, 1));
-	while (i < prog->n_philos)
+	if (!prog->dead_flg && !prog->end_flag)
 	{
-		philo = &prog->philos[i];
-		if (pthread_join(philo->p_live, NULL))
-			return (ft_write_error(prog, 1));
-		i++;
+		while (i < prog->n_philos)
+		{
+			philo = &prog->philos[i];
+			if (pthread_join(philo->p_live, NULL))
+				return (ft_write_error(prog, 1));
+			else if (philo->dead)
+				return (1);
+			i++;
+		}
 	}
 	return (1);
 }

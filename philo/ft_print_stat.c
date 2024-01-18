@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/18 13:38:41 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/18 19:57:49 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_print_action(t_philo *philo)
 	pthread_mutex_lock(philo->print);
 	philo->live_time = ft_gettime() - philo->start_time;
 	printf("\033[1;37m%zu ", philo->live_time);
-	printf("%zu %s\n", philo->num, philo->action);
+	printf("\033[38;5;%zum%zu %s\n", philo->num, philo->num, philo->action);
 	pthread_mutex_unlock(philo->print);
 }
 
@@ -48,10 +48,11 @@ void	ft_print_philo_stat(t_philo *philo)
 	else
 		printf("\033[1;32mALIVE\033[0;37m\n");
 	printf("\n Live time:   |%zu|\n", philo->live_time);
+	printf("~ %zu Sice last eating...\n", philo->last_eat);
 	printf(" Philosopher must eat");
 	printf(" |%ld| times\n\n", philo->times_to_eat);
-	ft_print_forks_stat(&philo->l_fork, 1);
-	ft_print_forks_stat(&philo->r_fork, 1);
+	ft_print_forks_stat(&philo->forks[philo->lf_num], 1);
+	ft_print_forks_stat(&philo->forks[philo->rf_num], 1);
 	if (philo->lf_grab && philo->rf_grab)
 		printf("\033[1;32m Ready to eat some 🍝 \033[1;37m\n");
 	ft_print_action(philo);

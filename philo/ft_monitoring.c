@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:04:14 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/18 20:13:36 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 14:13:51 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	*ft_observer(void *arg)
 	while (!prog->dead_flg && !prog->end_flag)
 	{
 		i = 0;
-		if (ft_check_eating_times(prog))
+		prog->end_flag = ft_check_eating_times(prog);
+		if (prog->end_flag)
 			return (NULL);
 		while (i < prog->n_philos)
 		{

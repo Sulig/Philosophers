@@ -6,14 +6,14 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2024/01/18 20:13:27 by sadoming         ###   ########.fr        #
+#    Updated: 2024/01/19 13:27:37 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 # Default arguments for make run
-DEF = 2 310 200 100 
+DEF = 2 310 200 100 2
 # ------------------ #
 # Flags:
 

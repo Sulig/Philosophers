@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/18 20:13:32 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 14:13:34 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ft_grab_forks(t_philo *philo)
 	}
 }
 
-static void	ft_release_forks(t_philo *philo, int print)
+void	ft_release_forks(t_philo *philo, int print)
 {
 	if (philo->lf_grab)
 	{
@@ -68,8 +68,8 @@ static void	ft_release_forks(t_philo *philo, int print)
 
 static void	ft_is_eating(t_philo *philo)
 {
-	philo->action = "\033[1;33mis eating 🍝";
 	philo->eating = 1;
+	philo->action = "\033[1;33mis eating 🍝";
 	ft_print_action(philo);
 	philo->last_eat = philo->live_time;
 	if (philo->times_to_eat > 0)
@@ -111,7 +111,10 @@ void	*ft_routine(void *arg)
 		philo->dead = ft_kill_philo(philo);
 	}
 	ft_release_forks(philo, 0);
-	philo->action = "\033[1;31mis DEAD ☠️";
-	ft_print_action(philo);
+	if (philo->dead)
+	{
+		philo->action = "\033[1;31mis DEAD ☠️";
+		ft_print_action(philo);
+	}
 	return (NULL);
 }

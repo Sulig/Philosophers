@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:28:03 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 14:13:38 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:18:31 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_join_pthreads(t_prog *prog)
 	while (i < prog->n_philos)
 	{
 		philo = &prog->philos[i];
-		if (pthread_join(philo->p_live, NULL))
+		if (pthread_detach(philo->p_live))
 			return (ft_write_error(prog, 1));
 		i++;
 	}

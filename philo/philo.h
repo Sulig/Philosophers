@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 14:13:55 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 19:10:43 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_prog
 }				t_prog;
 
 /* UTILS */
-int		ft_atoi(const char *str);
 size_t	ft_atos(const char *str);
 size_t	ft_gettime(void);
 void	ft_bzero(void *s, size_t n);
@@ -77,12 +76,15 @@ int		ft_init_prog(t_prog *t_prog, char **args, int argc);
 int		ft_check_eating_times(t_prog *prog);
 int		ft_kill_philo(t_philo *philo);
 
-/* PTHREADS */
+/* MUTEX */
 int		ft_init_mutex(t_prog *prog);
 int		ft_destroy_mutex(t_prog *prog);
+void	ft_grab_forks(t_philo *philo);
+void	ft_release_forks(t_philo *philo, int print);
+
+/* PTHREADS */
 int		ft_start_pthreads(t_prog *prog);
 int		ft_join_pthreads(t_prog *prog);
-void	ft_release_forks(t_philo *philo, int print);
 void	*ft_observer(void *arg);
 void	*ft_routine(void *arg);
 

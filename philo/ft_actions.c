@@ -6,13 +6,13 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 17:14:01 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 19:10:35 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_grab_forks(t_philo *philo)
+void	ft_grab_forks(t_philo *philo)
 {
 	if (!philo->lf_grab)
 	{

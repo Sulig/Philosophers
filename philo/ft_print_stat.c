@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/18 19:57:49 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 19:10:30 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_print_philo_stat(t_philo *philo)
 		printf("\033[1;31mDEAD\033[1;37m\n");
 	else
 		printf("\033[1;32mALIVE\033[0;37m\n");
-	printf("\n Live time:   |%zu|\n", philo->live_time);
+	printf("\n Live time:   |%Zu|\n", philo->live_time);
 	printf("~ %zu Sice last eating...\n", philo->last_eat);
 	printf(" Philosopher must eat");
 	printf(" |%ld| times\n\n", philo->times_to_eat);

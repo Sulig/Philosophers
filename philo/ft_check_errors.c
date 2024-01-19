@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 13:49:13 by sadoming          #+#    #+#             */
-/*   Updated: 2023/12/27 16:43:00 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:25:15 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_isacceptable(const char *str)
 {
 	int	parsed;
 
-	parsed = ft_atoi(str);
+	parsed = ft_atos(str);
 	if (parsed <= 0)
 		return (0);
 	else

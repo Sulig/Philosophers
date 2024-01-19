@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:14:19 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/16 17:22:50 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/19 19:10:24 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,6 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ft_bzero(call, count * size);
 	return (call);
-}
-
-int	ft_atoi(const char *str)
-{
-	int		cnt;
-	int		sign;
-	int		find;
-
-	find = '\0';
-	cnt = -1;
-	sign = 1;
-	while (str[++cnt] < 33)
-		if ((str[cnt] < 9 || str[cnt] > 13) && str[cnt] != ' ')
-			return ('\0');
-	if (str[cnt] == '-' || str[cnt] == '+')
-	{
-		if (str[cnt] == '-')
-			sign *= -1;
-		cnt++;
-	}
-	while (str[cnt] >= '0' && str[cnt] <= '9')
-	{
-		find *= 10;
-		find += str[cnt] - '0';
-		cnt++;
-	}
-	return (find * sign);
 }
 
 size_t	ft_atos(const char *str)

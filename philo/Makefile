@@ -13,7 +13,7 @@
 NAME = philo
 
 # Default arguments for make run
-DEF = 2 310 200 100 1
+DEF = 2 310 200 100
 # ------------------ #
 # Flags:
 

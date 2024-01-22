@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 19:10:30 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:14:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,23 @@ void	ft_print_forks_stat(t_fork *forks, size_t len)
 
 void	ft_print_philo_stat(t_philo *philo)
 {
+	size_t	for_die;
+
+	for_die = 0;
 	printf("\033[1;34m\n~ Philosopher |%zu| ~ \t", philo->num);
 	printf("\033[1;37mStatus:\t");
 	if (philo->dead)
 		printf("\033[1;31mDEAD\033[1;37m\n");
 	else
 		printf("\033[1;32mALIVE\033[0;37m\n");
-	printf("\n Live time:   |%Zu|\n", philo->live_time);
-	printf("~ %zu Sice last eating...\n", philo->last_eat);
+	printf("\n Live time:    |%zu|\n", philo->live_time);
+	printf(" Last eating on: |%zu|\n", philo->last_eat);
+	philo->time_to_die += philo->last_eat;
+	if (philo->live_time < philo->time_to_die)
+		for_die = philo->time_to_die - philo->live_time;
+	else
+		for_die = philo->live_time - philo->time_to_die;
+	printf(" Will live |%zu| mls more\n", for_die);
 	printf(" Philosopher must eat");
 	printf(" |%ld| times\n\n", philo->times_to_eat);
 	ft_print_forks_stat(&philo->forks[philo->lf_num], 1);

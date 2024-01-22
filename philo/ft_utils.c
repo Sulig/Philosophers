@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:14:19 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 19:10:24 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:37:26 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,13 @@ size_t	ft_gettime(void)
 		return (-1);
 	}
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	ft_usleep(size_t miliseg)
+{
+	size_t	start;
+
+	start = ft_gettime();
+	while (ft_gettime() - start < miliseg)
+		usleep(250);
 }

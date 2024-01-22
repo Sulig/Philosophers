@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 19:10:43 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/22 21:00:05 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_prog
 /* UTILS */
 size_t	ft_atos(const char *str);
 size_t	ft_gettime(void);
+void	ft_usleep(size_t miliseg);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 

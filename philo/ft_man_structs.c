@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 14:13:42 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:59:48 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ int	ft_init_prog(t_prog *prog, char **args, int argc)
 		prog->philos[i].time_to_die = prog->values[1];
 		prog->philos[i].time_to_eat = prog->values[2];
 		prog->philos[i].time_to_sleep = prog->values[3];
+		if (prog->values[1] > prog->values[3])
+			prog->philos[i].time_to_think = prog->values[3] - prog->values[1];
+		if (prog->values[1] < prog->values[3])
+			prog->philos[i].time_to_think = prog->values[1] - prog->values[3];
 		i++;
 	}
 	ft_init_all(prog);

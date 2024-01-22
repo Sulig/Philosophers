@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:04:14 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 19:10:39 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:59:53 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,23 @@ int	ft_check_eating_times(t_prog *prog)
 
 int	ft_kill_philo(t_philo *philo)
 {
+	size_t	for_die;
+
+	for_die = 0;
 	philo->dead = 0;
 	philo->live_time = ft_gettime() - philo->start_time;
-	if (philo->live_time - philo->last_eat >= philo->time_to_die)
-		if (!philo->eating)
+	if (philo->live_time < philo->time_to_die)
+		for_die = philo->time_to_die - philo->live_time;
+	else
+		for_die = philo->live_time - philo->time_to_die;
+	if (!philo->eating)
+		if (!for_die)
 			philo->dead = 1;
+	if (philo->dead)
+	{
+		philo->action = "\033[1;31mis DEAD ☠️";
+		ft_print_action(philo);
+	}
 	return (philo->dead);
 }
 

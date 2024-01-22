@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/19 19:10:35 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:59:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ static void	ft_is_eating(t_philo *philo)
 	philo->eating = 1;
 	philo->action = "\033[1;33mis eating 🍝";
 	ft_print_action(philo);
-	philo->last_eat = philo->live_time;
+	philo->last_eat = ft_gettime() - philo->start_time;
+	philo->time_to_die += philo->last_eat;
 	if (philo->times_to_eat > 0)
 		philo->times_to_eat--;
-	usleep(philo->time_to_eat * 1000);
+	ft_usleep(philo->time_to_eat);
 	philo->eating = 0;
 }
 
@@ -82,14 +83,10 @@ static void	ft_sleep_think(t_philo *philo)
 {
 	philo->action = "\033[0;37mis sleeping 💤";
 	ft_print_action(philo);
-	usleep(philo->time_to_sleep * 1000);
-	if (!philo->dead)
-	{
-		philo->action = "\033[1;37mis thinking 💭";
-		philo->time_to_think = philo->time_to_die - philo->time_to_sleep;
-		ft_print_action(philo);
-		usleep(philo->time_to_think);
-	}
+	ft_usleep(philo->time_to_sleep);
+	philo->action = "\033[1;37mis thinking 💭";
+	ft_print_action(philo);
+	ft_usleep(philo->time_to_think);
 }
 
 void	*ft_routine(void *arg)
@@ -109,12 +106,6 @@ void	*ft_routine(void *arg)
 			ft_sleep_think(philo);
 		}
 		philo->dead = ft_kill_philo(philo);
-	}
-	ft_release_forks(philo, 0);
-	if (philo->dead)
-	{
-		philo->action = "\033[1;31mis DEAD ☠️";
-		ft_print_action(philo);
 	}
 	return (NULL);
 }

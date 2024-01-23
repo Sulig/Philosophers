@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/22 20:59:56 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:13:17 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,13 @@ void	*ft_routine(void *arg)
 	t_philo	*philo;
 
 	philo = arg;
+	philo->time_to_think = philo->time_to_eat + philo->time_to_sleep;
+	if (philo->time_to_think > philo->time_to_die)
+		philo->time_to_think -= philo->time_to_die;
+	else
+		philo->time_to_think = philo->time_to_die - philo->time_to_think;
+	if (philo->time_to_think - 2 > 0)
+		philo->time_to_think -= 2;
 	if (!(philo->num % 2))
 		usleep(100);
 	while (!philo->dead)

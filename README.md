@@ -13,12 +13,25 @@ Vas a aprender a como crear hilos y descubrirás los mutex.
 
 ***
 ## Contenido del repositorio:
-- Philosophers *in progress*
+- Philosophers Mandatory
 - [Subject](https://github.com/Sulig/Philosophers/blob/master/Philosophers.pdf)
 
 ***
 ## Comandos Esenciales:
 
+Make philo
+
+    make all
+
+
+Run philo with default imput
+
+    make run
+
+
+Clean all
+
+    make clear
 
 ***
 ~ Made by sadoming ~

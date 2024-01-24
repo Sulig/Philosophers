@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:04:14 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/23 14:13:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:34:44 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	ft_kill_philo(t_philo *philo)
 		if (!for_die)
 			philo->dead = 1;
 	if (philo->dead)
-	{
 		philo->action = "\033[1;31mis DEAD ☠️";
-		ft_print_action(philo);
-	}
 	return (philo->dead);
 }
 
@@ -67,7 +64,10 @@ void	*ft_observer(void *arg)
 		{
 			prog->dead_flg = ft_kill_philo(&prog->philos[i]);
 			if (prog->dead_flg)
+			{
+				ft_print_action(&prog->philos[i]);
 				return (NULL);
+			}
 			i++;
 		}
 	}

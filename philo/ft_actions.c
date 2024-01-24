@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/23 14:13:17 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:37:34 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,21 @@
 
 void	ft_grab_forks(t_philo *philo)
 {
-	if (!philo->lf_grab)
+	if (!philo->forks[philo->lf_num].grabed && !philo->lf_grab)
 	{
-		if (!philo->forks[philo->lf_num].grabed)
-		{
-			pthread_mutex_lock(&philo->forks[philo->lf_num].locker);
-			philo->forks[philo->lf_num].grabed = 1;
-			philo->lf_grab = 1;
-			philo->action = "\033[1;36mhas grabed the left fork 🍴";
-			ft_print_action(philo);
-		}
+		pthread_mutex_lock(&philo->forks[philo->lf_num].locker);
+		philo->forks[philo->lf_num].grabed = 1;
+		philo->lf_grab = 1;
+		philo->action = "\033[1;36mhas grabed the left fork 🍴";
+		ft_print_action(philo);
 	}
-	if (!philo->rf_grab)
+	if (!philo->forks[philo->rf_num].grabed && !philo->rf_grab)
 	{
-		if (!philo->forks[philo->rf_num].grabed)
-		{
-			pthread_mutex_lock(&philo->forks[philo->rf_num].locker);
-			philo->forks[philo->rf_num].grabed = 1;
-			philo->rf_grab = 1;
-			philo->action = "\033[1;36mhas grabed the right fork 🍴";
-			ft_print_action(philo);
-		}
+		pthread_mutex_lock(&philo->forks[philo->rf_num].locker);
+		philo->forks[philo->rf_num].grabed = 1;
+		philo->rf_grab = 1;
+		philo->action = "\033[1;36mhas grabed the right fork 🍴";
+		ft_print_action(philo);
 	}
 }
 
@@ -102,7 +96,7 @@ void	*ft_routine(void *arg)
 	if (philo->time_to_think - 2 > 0)
 		philo->time_to_think -= 2;
 	if (!(philo->num % 2))
-		usleep(100);
+		ft_usleep(philo->time_to_think);
 	while (!philo->dead)
 	{
 		ft_grab_forks(philo);

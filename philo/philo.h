@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/23 14:13:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:31:35 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_philo
 	size_t			time_to_sleep;
 	size_t			time_to_think;
 	char			*action;
+	int				finish;
 	int				eating;
 	int				dead;
 	int				lf_grab;
@@ -93,6 +94,5 @@ void	*ft_routine(void *arg);
 void	ft_print_action(t_philo *philo);
 void	ft_print_forks_stat(t_fork *forks, size_t len);
 void	ft_print_philo_stat(t_philo *philo);
-void	ft_print_stat(t_prog *t_prog);
 
 #endif

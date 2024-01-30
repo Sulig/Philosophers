@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/24 17:37:34 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:31:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,28 @@ void	ft_grab_forks(t_philo *philo)
 		philo->action = "\033[1;36mhas grabed the right fork 🍴";
 		ft_print_action(philo);
 	}
+	printf("Philo is trying to grab forks\n");
 }
 
 void	ft_release_forks(t_philo *philo, int print)
 {
-	if (philo->lf_grab)
+	if (philo->forks[philo->lf_num].grabed && philo->lf_grab)
 	{
-		if (philo->forks[philo->lf_num].grabed)
-		{
-			philo->forks[philo->lf_num].grabed = 0;
-			philo->lf_grab = 0;
-			philo->action = "\033[1;34mhas released the left fork 🍴";
-			if (print)
-				ft_print_action(philo);
-			pthread_mutex_unlock(&philo->forks[philo->lf_num].locker);
-		}
+		philo->forks[philo->lf_num].grabed = 0;
+		philo->lf_grab = 0;
+		philo->action = "\033[1;34mhas released the left fork 🍴";
+		if (print)
+			ft_print_action(philo);
+		pthread_mutex_unlock(&philo->forks[philo->lf_num].locker);
 	}
-	if (philo->rf_grab)
+	if (philo->forks[philo->rf_num].grabed && philo->rf_grab)
 	{
-		if (philo->forks[philo->rf_num].grabed)
-		{
-			philo->forks[philo->rf_num].grabed = 0;
-			philo->rf_grab = 0;
-			philo->action = "\033[1;34mhas released the right fork 🍴";
-			if (print)
-				ft_print_action(philo);
-			pthread_mutex_unlock(&philo->forks[philo->rf_num].locker);
-		}
+		philo->forks[philo->rf_num].grabed = 0;
+		philo->rf_grab = 0;
+		philo->action = "\033[1;34mhas released the right fork 🍴";
+		if (print)
+			ft_print_action(philo);
+		pthread_mutex_unlock(&philo->forks[philo->rf_num].locker);
 	}
 }
 
@@ -69,6 +64,8 @@ static void	ft_is_eating(t_philo *philo)
 	philo->time_to_die += philo->last_eat;
 	if (philo->times_to_eat > 0)
 		philo->times_to_eat--;
+	if (philo->times_to_eat == 0)
+		philo->finish = 1;
 	ft_usleep(philo->time_to_eat);
 	philo->eating = 0;
 }
@@ -97,7 +94,7 @@ void	*ft_routine(void *arg)
 		philo->time_to_think -= 2;
 	if (!(philo->num % 2))
 		ft_usleep(philo->time_to_think);
-	while (!philo->dead)
+	while (!philo->dead && !philo->finish)
 	{
 		ft_grab_forks(philo);
 		if (philo->lf_grab && philo->rf_grab)

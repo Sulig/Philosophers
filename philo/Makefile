@@ -6,19 +6,20 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2024/01/19 17:19:59 by sadoming         ###   ########.fr        #
+#    Updated: 2024/01/30 17:01:13 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 # Default arguments for make run
-DEF = 100 800 200 200
+DEF = 1 400 200 200
 # ------------------ #
 # Flags:
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
+CFLAGSF = -Wall -Wextra -Werror -fsanitize=thread -g
 # ------------------ #
 # Sources:
 
@@ -57,7 +58,7 @@ run: $(NAME)
 $%.o: %.c $(LIB) $(MAK)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIB) $(MAK)
 	@echo "\033[1;37m\n~ **************************************** ~\n"
 	@echo "\033[1;93m * Making $(NAME) -->\033[1;97m\n"
 	@$(CC) $(OBJ) -o $(NAME)
@@ -74,6 +75,12 @@ debug: $(NAME)
 	@echo "\n~ **************************************** ~\n"
 	@lldb $(NAME) $(DEF)
 
+# ------------------
+
+fsanitize:
+	$(CC) $(CFLAGSF) $(SRC) $(LIB)
+	@./a.out $(DEF)
+	
 # ------------------
 
 leaks: $(NAME)
@@ -100,7 +107,10 @@ clean:
 
 fclean: clean
 	@/bin/rm -f $(NAME)
+	@/bin/rm -f a.out
+	@/bin/rm -f $(LIB).gch
 	@/bin/rm -frd $(NAME).dSYM
+	@/bin/rm -frd a.out.dSYM
 	@find ../ -name ".DS_Store" -type f -delete
 	@echo "\033[1;34m All cleaned succesfully\033[1;97m\n"
 
@@ -109,5 +119,5 @@ clear: fclean
 
 re: fclean all
 # -------------------- #
-.PHONY: all clean clear fclean debug leaks norm re run val trueall
+.PHONY: all clean clear fclean fsanitize.                                                                                                                                                                                                                                                                                                      debug leaks norm re run val trueall
 # ********************************************************************************** #

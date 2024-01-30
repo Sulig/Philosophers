@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/24 17:13:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:31:12 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,4 @@ void	ft_print_philo_stat(t_philo *philo)
 	if (philo->lf_grab && philo->rf_grab)
 		printf("\033[1;32m Ready to eat some 🍝 \033[1;37m\n");
 	ft_print_action(philo);
-}
-
-void	ft_print_stat(t_prog *t_prog)
-{
-	size_t	i;
-	int		deaths;	
-
-	i = 0;
-	deaths = 0;
-	printf("\033[1;35m ~ Status ~\n\n");
-	printf("\033[1;37m Number of philos: %zu\n", t_prog->n_philos);
-	printf("~~~~~~~~~~~~~~~\n\n");
-	while (i < t_prog->n_philos)
-	{
-		deaths += t_prog->philos[i].dead;
-		ft_print_philo_stat(&t_prog->philos[i]);
-		printf("\033[1;35m~~~~~~~~~~~~~~~~~\n\033[1;37m\n");
-		i++;
-	}
-	printf("\033[1;34mFinal:\t");
-	if (!deaths)
-		printf("\033[1;32mNo one is dead :D\n");
-	else if (deaths == 1)
-		printf("\033[1;33mOne philo is DEAD\n");
-	else
-		printf("\033[1;31mMore than one philo is DEAD!\n");
-	printf("\033[1;35m~~~~~~~~~~~~~\033[0;37m\n");
 }

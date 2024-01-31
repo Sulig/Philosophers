@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/30 20:31:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:38:51 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_grab_forks(t_philo *philo)
 		philo->action = "\033[1;36mhas grabed the right fork 🍴";
 		ft_print_action(philo);
 	}
-	printf("Philo is trying to grab forks\n");
 }
 
 void	ft_release_forks(t_philo *philo, int print)
@@ -65,19 +64,22 @@ static void	ft_is_eating(t_philo *philo)
 	if (philo->times_to_eat > 0)
 		philo->times_to_eat--;
 	if (philo->times_to_eat == 0)
-		philo->finish = 1;
+		philo->status = 2;
 	ft_usleep(philo->time_to_eat);
 	philo->eating = 0;
 }
 
 static void	ft_sleep_think(t_philo *philo)
 {
-	philo->action = "\033[0;37mis sleeping 💤";
-	ft_print_action(philo);
-	ft_usleep(philo->time_to_sleep);
-	philo->action = "\033[1;37mis thinking 💭";
-	ft_print_action(philo);
-	ft_usleep(philo->time_to_think);
+	if (philo->status == 1)
+	{
+		philo->action = "\033[0;37mis sleeping 💤";
+		ft_print_action(philo);
+		ft_usleep(philo->time_to_sleep);
+		philo->action = "\033[1;37mis thinking 💭";
+		ft_print_action(philo);
+		ft_usleep(philo->time_to_think);
+	}
 }
 
 void	*ft_routine(void *arg)
@@ -90,20 +92,20 @@ void	*ft_routine(void *arg)
 		philo->time_to_think -= philo->time_to_die;
 	else
 		philo->time_to_think = philo->time_to_die - philo->time_to_think;
-	if (philo->time_to_think - 2 > 0)
+	if (philo->time_to_think > 1)
 		philo->time_to_think -= 2;
 	if (!(philo->num % 2))
-		ft_usleep(philo->time_to_think);
-	while (!philo->dead && !philo->finish)
+		ft_usleep(philo->time_to_eat);
+	while (philo->status == 1)
 	{
 		ft_grab_forks(philo);
 		if (philo->lf_grab && philo->rf_grab)
 		{
 			ft_is_eating(philo);
-			ft_release_forks(philo, 1);
+			ft_release_forks(philo, philo->status);
 			ft_sleep_think(philo);
 		}
-		philo->dead = ft_kill_philo(philo);
+		philo->status = ft_kill_philo(philo);
 	}
 	return (NULL);
 }

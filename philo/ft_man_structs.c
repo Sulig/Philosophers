@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/30 20:31:18 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:38:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_init_all(t_prog *prog)
 	while (i < prog->n_philos)
 	{
 		prog->forks[i].grabed = 0;
-		prog->philos[i].dead = 0;
+		prog->philos[i].status = 1;
 		prog->philos[i].eating = 0;
 		prog->philos[i].lf_grab = 0;
 		prog->philos[i].rf_grab = 0;
@@ -109,7 +109,6 @@ int	ft_init_prog(t_prog *prog, char **args, int argc)
 		prog->philos[i].time_to_die = prog->values[1];
 		prog->philos[i].time_to_eat = prog->values[2];
 		prog->philos[i].time_to_sleep = prog->values[3];
-		prog->philos[i].finish = 0;
 		i++;
 	}
 	ft_init_all(prog);

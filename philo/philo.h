@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/30 20:31:35 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:39:01 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ typedef struct s_philo
 	size_t			time_to_sleep;
 	size_t			time_to_think;
 	char			*action;
-	int				finish;
 	int				eating;
-	int				dead;
+	int				status;
 	int				lf_grab;
 	int				rf_grab;
 	int				lf_num;

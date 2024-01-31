@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:04:14 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/24 17:34:44 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:38:43 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_kill_philo(t_philo *philo)
 	size_t	for_die;
 
 	for_die = 0;
-	philo->dead = 0;
 	philo->live_time = ft_gettime() - philo->start_time;
 	if (philo->live_time < philo->time_to_die)
 		for_die = philo->time_to_die - philo->live_time;
@@ -42,10 +41,13 @@ int	ft_kill_philo(t_philo *philo)
 		for_die = philo->live_time - philo->time_to_die;
 	if (!philo->eating)
 		if (!for_die)
-			philo->dead = 1;
-	if (philo->dead)
+			philo->status = 0;
+	if (!philo->status)
+	{
 		philo->action = "\033[1;31mis DEAD ☠️";
-	return (philo->dead);
+		ft_print_action(philo);
+	}
+	return (philo->status);
 }
 
 void	*ft_observer(void *arg)
@@ -65,7 +67,7 @@ void	*ft_observer(void *arg)
 			prog->dead_flg = ft_kill_philo(&prog->philos[i]);
 			if (prog->dead_flg)
 			{
-				ft_print_action(&prog->philos[i]);
+				//ft_print_action(&prog->philos[i]);
 				return (NULL);
 			}
 			i++;

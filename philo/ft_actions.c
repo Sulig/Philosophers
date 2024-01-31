@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 14:38:51 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/31 20:21:31 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	ft_grab_forks(t_philo *philo)
 {
-	if (!philo->forks[philo->lf_num].grabed && !philo->lf_grab)
+	if (!philo->l_fork->grabed && !philo->lf_grab)
 	{
-		pthread_mutex_lock(&philo->forks[philo->lf_num].locker);
-		philo->forks[philo->lf_num].grabed = 1;
+		pthread_mutex_lock(&philo->l_fork->locker);
+		philo->l_fork->grabed = 1;
 		philo->lf_grab = 1;
 		philo->action = "\033[1;36mhas grabed the left fork 🍴";
 		ft_print_action(philo);
 	}
-	if (!philo->forks[philo->rf_num].grabed && !philo->rf_grab)
+	if (!philo->r_fork->grabed && !philo->rf_grab)
 	{
-		pthread_mutex_lock(&philo->forks[philo->rf_num].locker);
-		philo->forks[philo->rf_num].grabed = 1;
+		pthread_mutex_lock(&philo->r_fork->locker);
+		philo->r_fork->grabed = 1;
 		philo->rf_grab = 1;
 		philo->action = "\033[1;36mhas grabed the right fork 🍴";
 		ft_print_action(philo);
@@ -34,23 +34,23 @@ void	ft_grab_forks(t_philo *philo)
 
 void	ft_release_forks(t_philo *philo, int print)
 {
-	if (philo->forks[philo->lf_num].grabed && philo->lf_grab)
+	if (philo->l_fork->grabed && philo->lf_grab)
 	{
-		philo->forks[philo->lf_num].grabed = 0;
+		philo->l_fork->grabed = 0;
 		philo->lf_grab = 0;
 		philo->action = "\033[1;34mhas released the left fork 🍴";
 		if (print)
 			ft_print_action(philo);
-		pthread_mutex_unlock(&philo->forks[philo->lf_num].locker);
+		pthread_mutex_unlock(&philo->l_fork->locker);
 	}
-	if (philo->forks[philo->rf_num].grabed && philo->rf_grab)
+	if (philo->r_fork->grabed && philo->rf_grab)
 	{
-		philo->forks[philo->rf_num].grabed = 0;
+		philo->r_fork->grabed = 0;
 		philo->rf_grab = 0;
 		philo->action = "\033[1;34mhas released the right fork 🍴";
 		if (print)
 			ft_print_action(philo);
-		pthread_mutex_unlock(&philo->forks[philo->rf_num].locker);
+		pthread_mutex_unlock(&philo->r_fork->locker);
 	}
 }
 
@@ -105,7 +105,7 @@ void	*ft_routine(void *arg)
 			ft_release_forks(philo, philo->status);
 			ft_sleep_think(philo);
 		}
-		philo->status = ft_kill_philo(philo);
+		  philo->status = ft_kill_philo(philo);
 	}
 	return (NULL);
 }

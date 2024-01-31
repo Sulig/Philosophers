@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 14:39:01 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/31 20:21:51 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ typedef struct s_philo
 	int				status;
 	int				lf_grab;
 	int				rf_grab;
-	int				lf_num;
-	int				rf_num;
-	t_fork			*forks;
+	t_fork			*l_fork;
+	t_fork			*r_fork;
 	pthread_t		p_live;
 	pthread_mutex_t	*print;
 }				t_philo;

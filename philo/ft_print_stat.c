@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 13:14:38 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:37:10 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	ft_print_philo_stat(t_philo *philo)
 	printf(" Will live |%zu| mls more\n", for_die);
 	printf(" Philosopher must eat");
 	printf(" |%ld| times\n\n", philo->times_to_eat);
-	ft_print_forks_stat(&philo->forks[philo->lf_num], 1);
-	ft_print_forks_stat(&philo->forks[philo->rf_num], 1);
+	ft_print_forks_stat(philo->l_fork, 1);
+	ft_print_forks_stat(philo->r_fork, 1);
 	if (philo->lf_grab && philo->rf_grab)
 		printf("\033[1;32m Ready to eat some 🍝 \033[1;37m\n");
 	ft_print_action(philo);

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 17:37:10 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:25:53 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_print_philo_stat(t_philo *philo)
 {
 	size_t	for_die;
 
+	pthread_mutex_lock(philo->print);
 	printf("\033[1;34m\n~ Philosopher |%zu| ~ \t", philo->num);
 	printf("\033[1;37mStatus:\t");
 	if (!philo->status)
@@ -56,13 +57,13 @@ void	ft_print_philo_stat(t_philo *philo)
 	if (philo->live_time < philo->time_to_die)
 		for_die = philo->time_to_die - philo->live_time;
 	else
-		for_die = philo->live_time - philo->time_to_die;
+		for_die = 0;
 	printf(" Will live |%zu| mls more\n", for_die);
 	printf(" Philosopher must eat");
 	printf(" |%ld| times\n\n", philo->times_to_eat);
 	ft_print_forks_stat(philo->l_fork, 1);
 	ft_print_forks_stat(philo->r_fork, 1);
-	if (philo->lf_grab && philo->rf_grab)
-		printf("\033[1;32m Ready to eat some 🍝 \033[1;37m\n");
-	ft_print_action(philo);
+	printf("\033[1;37m%zu ", philo->live_time);
+	printf("\033[38;5;%zum%zu %s\n", philo->num, philo->num, philo->action);
+	pthread_mutex_unlock(philo->print);
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 12:57:33 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:26:07 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static void	ft_sleep_think(t_philo *philo)
 	{
 		philo->action = "\033[1;37mis thinking 💭";
 		ft_print_action(philo);
-		ft_usleep(philo->time_to_think);
+		while (philo->l_fork->grabed)
+			ft_usleep(2);
 	}
 }
 
@@ -90,13 +91,6 @@ void	*ft_routine(void *arg)
 	t_philo	*philo;
 
 	philo = arg;
-	philo->time_to_think = philo->time_to_eat + philo->time_to_sleep;
-	if (philo->time_to_think > philo->time_to_die)
-		philo->time_to_think -= philo->time_to_die;
-	else
-		philo->time_to_think = philo->time_to_die - philo->time_to_think;
-	if (philo->time_to_think > 1)
-		philo->time_to_think -= 2;
 	if (!(philo->num % 2))
 		ft_usleep(philo->time_to_eat);
 	while (philo->status == 1)

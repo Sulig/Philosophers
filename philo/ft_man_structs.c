@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 12:41:17 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:26:11 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ static void	ft_init_all(t_prog *prog)
 		prog->philos[i].action = acction;
 		prog->philos[i].print = &prog->print;
 		prog->philos[i].start_time = ft_gettime();
-		prog->philos[i].live_time = ft_gettime() - prog->philos[i].start_time;
-		prog->philos[i].last_eat = prog->philos[i].live_time;
 		prog->philos[i].l_fork = &prog->forks[i];
 		if (i + 1 == prog->n_philos)
 			prog->philos[i].r_fork = &prog->forks[0];

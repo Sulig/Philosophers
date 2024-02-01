@@ -14,6 +14,7 @@ NAME = philo
 
 # Default arguments for make run
 DEF = 2 400 200 200
+DEF = 100 800 200 200 #No Philo should die!
 # ------------------ #
 # Flags:
 

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 20:21:51 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:40:45 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ typedef struct s_philo
 typedef struct s_prog
 {
 	int				error;
-	int				dead_flg;
-	int				end_flag;
+	int				flag;
 	size_t			end_eating;
 	size_t			n_philos;
 	size_t			*values;

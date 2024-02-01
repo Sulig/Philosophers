@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 20:21:41 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:41:17 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static int	ft_init_callocs(t_prog *prog, char **args, int argc)
 	if (!prog->forks)
 		return (ft_free_prog(prog, 1));
 	prog->error = 0;
-	prog->dead_flg = 0;
-	prog->end_flag = 0;
+	prog->flag = 1;
 	prog->n_philos = prog->values[0];
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:04:14 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 20:21:38 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:53:55 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	ft_check_eating_times(t_prog *prog)
 		i++;
 	}
 	if (prog->end_eating == prog->n_philos)
-		prog->end_flag = 1;
-	return (prog->end_flag);
+		prog->flag = 2;
+	return (prog->flag);
 }
 
 int	ft_kill_philo(t_philo *philo)
@@ -42,36 +42,50 @@ int	ft_kill_philo(t_philo *philo)
 	if (!philo->eating)
 		if (!for_die)
 			philo->status = 0;
-	if (!philo->status)
-	{
-		philo->action = "\033[1;31mis DEAD ☠️";
-		ft_print_action(philo);
-	}
 	return (philo->status);
+}
+
+static int	ft_is_philo_dead(t_prog *prog)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (i < prog->n_philos)
+	{
+		prog->flag = ft_kill_philo(&prog->philos[i]);
+		if (!prog->flag)
+			break ;
+		i++;
+	}
+	if (!prog->flag)
+	{
+		while (j < prog->n_philos)
+		{
+			prog->philos[j].status = 2;
+			j++;
+		}
+		prog->philos[i].status = 0;
+		prog->philos[i].action = "\033[1;31mdied";
+		ft_print_action(&prog->philos[i]);
+	}
+	return (prog->flag);
 }
 
 void	*ft_observer(void *arg)
 {
 	t_prog	*prog;
-	size_t	i;
 
 	prog = arg;
-	while (!prog->dead_flg && !prog->end_flag)
+	while (prog->flag == 1)
 	{
-		i = 0;
-		prog->end_flag = ft_check_eating_times(prog);
-		if (prog->end_flag)
+		prog->flag = ft_check_eating_times(prog);
+		if (prog->flag == 2)
 			return (NULL);
-		while (i < prog->n_philos)
-		{
-			prog->dead_flg = ft_kill_philo(&prog->philos[i]);
-			if (prog->dead_flg)
-			{
-				//ft_print_action(&prog->philos[i]);
-				return (NULL);
-			}
-			i++;
-		}
+		prog->flag = ft_is_philo_dead(prog);
+		if (!prog->flag)
+			return (NULL);
 	}
 	return (NULL);
 }

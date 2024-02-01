@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/31 20:21:31 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:57:33 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_release_forks(t_philo *philo, int print)
 		philo->l_fork->grabed = 0;
 		philo->lf_grab = 0;
 		philo->action = "\033[1;34mhas released the left fork 🍴";
-		if (print)
+		if (print && philo->status == 1)
 			ft_print_action(philo);
 		pthread_mutex_unlock(&philo->l_fork->locker);
 	}
@@ -48,7 +48,7 @@ void	ft_release_forks(t_philo *philo, int print)
 		philo->r_fork->grabed = 0;
 		philo->rf_grab = 0;
 		philo->action = "\033[1;34mhas released the right fork 🍴";
-		if (print)
+		if (print && philo->status == 1)
 			ft_print_action(philo);
 		pthread_mutex_unlock(&philo->r_fork->locker);
 	}
@@ -76,6 +76,9 @@ static void	ft_sleep_think(t_philo *philo)
 		philo->action = "\033[0;37mis sleeping 💤";
 		ft_print_action(philo);
 		ft_usleep(philo->time_to_sleep);
+	}
+	if (philo->status == 1)
+	{
 		philo->action = "\033[1;37mis thinking 💭";
 		ft_print_action(philo);
 		ft_usleep(philo->time_to_think);
@@ -105,7 +108,7 @@ void	*ft_routine(void *arg)
 			ft_release_forks(philo, philo->status);
 			ft_sleep_think(philo);
 		}
-		  philo->status = ft_kill_philo(philo);
+		philo->status = ft_kill_philo(philo);
 	}
 	return (NULL);
 }

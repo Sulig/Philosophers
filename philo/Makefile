@@ -13,14 +13,15 @@
 NAME = philo
 
 # Default arguments for make run
+DEF = 1 400 200 200
 DEF = 2 400 200 200
-DEF = 100 800 200 200 #No Philo should die!
+#DEF = 100 800 200 200 #No Philo should die!
 # ------------------ #
 # Flags:
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
-CFLAGSF = -Wall -Wextra -Werror -fsanitize=thread -g
+CFLAGSF = -Wall -Wextra -Werror -fsanitize=thread
 # ------------------ #
 # Sources:
 

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 14:26:18 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 20:31:41 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_philo
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	char			*action;
 	int				eating;
 	int				status;
 	int				lf_grab;
@@ -45,6 +44,8 @@ typedef struct s_philo
 	t_fork			*r_fork;
 	pthread_t		p_live;
 	pthread_mutex_t	*print;
+	pthread_mutex_t	m_ltime;
+	pthread_mutex_t	m_stat;
 }				t_philo;
 
 typedef struct s_prog
@@ -52,6 +53,7 @@ typedef struct s_prog
 	int				error;
 	int				flag;
 	size_t			end_eating;
+	size_t			dp;
 	size_t			n_philos;
 	size_t			*values;
 	t_fork			*forks;		
@@ -87,7 +89,7 @@ void	*ft_observer(void *arg);
 void	*ft_routine(void *arg);
 
 /* PRINT STATUS && DEBUGG */
-void	ft_print_action(t_philo *philo);
+void	ft_print_action(t_philo *philo, char *action);
 void	ft_print_forks_stat(t_fork *forks, size_t len);
 void	ft_print_philo_stat(t_philo *philo);
 

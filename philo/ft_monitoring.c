@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:04:14 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 13:38:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 20:31:35 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_kill_philo(t_philo *philo)
 {
 	size_t	for_die;
 
+	pthread_mutex_lock(&philo->m_ltime);
+	pthread_mutex_lock(&philo->m_stat);
 	for_die = 0;
 	philo->live_time = ft_gettime() - philo->start_time;
 	if (philo->live_time < philo->time_to_die)
@@ -42,6 +44,8 @@ int	ft_kill_philo(t_philo *philo)
 	if (!philo->eating)
 		if (!for_die)
 			philo->status = 0;
+	pthread_mutex_unlock(&philo->m_stat);
+	pthread_mutex_unlock(&philo->m_ltime);
 	return (philo->status);
 }
 
@@ -61,14 +65,14 @@ static int	ft_is_philo_dead(t_prog *prog)
 	}
 	if (!prog->flag)
 	{
+		prog->dp = i;
 		while (j < prog->n_philos)
 		{
+			pthread_mutex_lock(&prog->philos[j].m_stat);
 			prog->philos[j].status = 2;
+			pthread_mutex_unlock(&prog->philos[j].m_stat);
 			j++;
 		}
-		prog->philos[i].status = 0;
-		prog->philos[i].action = "\033[1;31mdied";
-		ft_print_action(&prog->philos[i]);
 	}
 	return (prog->flag);
 }
@@ -82,10 +86,15 @@ void	*ft_observer(void *arg)
 	{
 		prog->flag = ft_check_eating_times(prog);
 		if (prog->flag == 2)
-			return (NULL);
+			break ;
 		prog->flag = ft_is_philo_dead(prog);
-		if (!prog->flag)
-			return (NULL);
 	}
+	pthread_mutex_lock(&prog->philos[prog->dp].m_stat);
+	if (!prog->flag)
+	{
+		prog->philos[prog->dp].status = 0;
+		ft_print_action(&prog->philos[prog->dp], "\033[1;31mdied");
+	}
+	pthread_mutex_unlock(&prog->philos[prog->dp].m_stat);
 	return (NULL);
 }

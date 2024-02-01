@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:10:32 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 14:26:11 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 20:31:26 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static int	ft_init_callocs(t_prog *prog, char **args, int argc)
 		return (ft_free_prog(prog, 1));
 	prog->error = 0;
 	prog->flag = 1;
+	prog->dp = 0;
 	prog->n_philos = prog->values[0];
 	return (1);
 }
@@ -64,10 +65,8 @@ static int	ft_init_callocs(t_prog *prog, char **args, int argc)
 static void	ft_init_all(t_prog *prog)
 {
 	size_t	i;
-	char	*acction;
 
 	i = 0;
-	acction = "\033[0;34mis doing nothing right now ⚐";
 	while (i < prog->n_philos)
 	{
 		prog->forks[i].grabed = 0;
@@ -75,7 +74,6 @@ static void	ft_init_all(t_prog *prog)
 		prog->philos[i].eating = 0;
 		prog->philos[i].lf_grab = 0;
 		prog->philos[i].rf_grab = 0;
-		prog->philos[i].action = acction;
 		prog->philos[i].print = &prog->print;
 		prog->philos[i].start_time = ft_gettime();
 		prog->philos[i].l_fork = &prog->forks[i];

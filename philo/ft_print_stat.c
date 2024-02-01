@@ -6,18 +6,20 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 14:25:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/01 20:00:33 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_print_action(t_philo *philo)
+void	ft_print_action(t_philo *philo, char *action)
 {
-	pthread_mutex_lock(philo->print);
+	pthread_mutex_lock(&philo->m_ltime);
 	philo->live_time = ft_gettime() - philo->start_time;
+	pthread_mutex_lock(philo->print);
 	printf("\033[1;37m%zu ", philo->live_time);
-	printf("\033[38;5;%zum%zu %s\n", philo->num, philo->num, philo->action);
+	printf("\033[38;5;%zum%zu %s\n", philo->num, philo->num, action);
+	pthread_mutex_unlock(&philo->m_ltime);
 	pthread_mutex_unlock(philo->print);
 }
 
@@ -63,7 +65,5 @@ void	ft_print_philo_stat(t_philo *philo)
 	printf(" |%ld| times\n\n", philo->times_to_eat);
 	ft_print_forks_stat(philo->l_fork, 1);
 	ft_print_forks_stat(philo->r_fork, 1);
-	printf("\033[1;37m%zu ", philo->live_time);
-	printf("\033[38;5;%zum%zu %s\n", philo->num, philo->num, philo->action);
 	pthread_mutex_unlock(philo->print);
 }

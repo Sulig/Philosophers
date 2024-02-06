@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 20:31:24 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:16:18 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,37 @@ void	ft_release_forks(t_philo *philo, int print)
 
 static void	ft_is_eating(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->m_eating);
 	philo->eating = 1;
 	ft_print_action(philo, "\033[1;33mis eating 🍝");
 	philo->last_eat = ft_gettime() - philo->start_time;
 	philo->time_to_die += philo->last_eat;
 	if (philo->times_to_eat > 0)
 		philo->times_to_eat--;
-	if (philo->times_to_eat == 0)
-		philo->status = 2;
+	pthread_mutex_unlock(&philo->m_eating);
 	ft_usleep(philo->time_to_eat);
+	pthread_mutex_lock(&philo->m_eating);
 	philo->eating = 0;
+	pthread_mutex_unlock(&philo->m_eating);
 }
 
 static void	ft_sleep_think(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->m_stat);
-	if (philo->status == 1)
+	size_t	status;
+
+	status = ft_status_philo(philo);
+	if (status == 1)
 	{
 		ft_print_action(philo, "\033[0;37mis sleeping 💤");
 		ft_usleep(philo->time_to_sleep);
 	}
-	if (philo->status == 1)
+	status = ft_status_philo(philo);
+	if (status == 1)
 	{
 		ft_print_action(philo, "\033[1;37mis thinking 💭");
-		while (philo->l_fork->grabed)
+		while (philo->l_fork->grabed && philo->r_fork->grabed)
 			ft_usleep(2);
 	}
-	pthread_mutex_unlock(&philo->m_stat);
 }
 
 void	*ft_routine(void *arg)
@@ -92,19 +96,17 @@ void	*ft_routine(void *arg)
 		ft_usleep(philo->time_to_die);
 		ft_release_forks(philo, 0);
 	}
-	//pthread_mutex_lock(&philo->m_stat);
 	if (!(philo->num % 2))
 		ft_usleep(philo->time_to_eat);
-	while (philo->status == 1)
+	while (ft_status_philo(philo) == 1)
 	{
 		ft_grab_forks(philo);
 		if (philo->lf_grab && philo->rf_grab)
 		{
 			ft_is_eating(philo);
-			ft_release_forks(philo, philo->status);
+			ft_release_forks(philo, ft_status_philo(philo));
 			ft_sleep_think(philo);
 		}
 	}
-	//pthread_mutex_unlock(&philo->m_stat);
 	return (NULL);
 }

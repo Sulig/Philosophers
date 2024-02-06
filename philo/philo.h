@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 20:31:41 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:16:22 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_philo
 	pthread_t		p_live;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	m_ltime;
+	pthread_mutex_t	m_eating;
 	pthread_mutex_t	m_stat;
 }				t_philo;
 
@@ -73,8 +74,9 @@ void	*ft_calloc(size_t count, size_t size);
 int		ft_check_all(char **args);
 int		ft_free_prog(t_prog *prog, int error);
 int		ft_init_prog(t_prog *t_prog, char **args, int argc);
+
 int		ft_check_eating_times(t_prog *prog);
-int		ft_kill_philo(t_philo *philo);
+int		ft_status_philo(t_philo *philo);
 
 /* MUTEX */
 int		ft_init_mutex(t_prog *prog);

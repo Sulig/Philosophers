@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2024/01/31 14:39:05 by sadoming         ###   ########.fr        #
+#    Updated: 2024/02/02 17:35:23 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ DEF = 2 400 200 200
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
-CFLAGSF = -Wall -Wextra -Werror -fsanitize=thread
+CFLAGSF = -Wall -Wextra -Werror -fsanitize=thread -g
 # ------------------ #
 # Sources:
 
@@ -99,6 +99,14 @@ val: $(NAME)
 	@echo "\n~ **************************************** ~\n"
 	@valgrind --leak-check=full -s ./$(NAME) $(DEF)
 
+val_fsn:
+	$(CC) $(CFLAGSF) $(SRC) $(LIB)
+	@echo "\033[1;34m\n~ **************************************** ~\n"
+	@echo " ~ Running ./a.out $(DEF)"
+	@echo "\n~ **************************************** ~\n"
+	@./a.out $(DEF)
+	@valgrind --leak-check=full -s ./a.out $(DEF)
+
 # ********************************************************************************* #
 # Clean region
 
@@ -121,5 +129,6 @@ clear: fclean
 
 re: fclean all
 # -------------------- #
-.PHONY: all clean clear fclean fsanitize.                                                                                                                                                                                                                                                                                                      debug leaks norm re run val trueall
+.PHONY: all clean clear fclean fsanitize
+.PHONY: debug leaks norm re run val val_fsn trueall
 # ********************************************************************************** #

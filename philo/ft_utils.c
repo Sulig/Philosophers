@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:14:19 by sadoming          #+#    #+#             */
-/*   Updated: 2024/01/30 17:06:10 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:04:02 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,5 @@ void	ft_usleep(size_t miliseg)
 
 	start = ft_gettime();
 	while (ft_gettime() - start < miliseg)
-		usleep(50);
+		usleep(25);
 }

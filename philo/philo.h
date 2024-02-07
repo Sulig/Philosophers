@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:29:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/06 16:16:22 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/07 11:58:15 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ typedef struct s_philo
 	pthread_t		p_live;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	m_ltime;
+	pthread_mutex_t	m_dtime;
 	pthread_mutex_t	m_eating;
+	pthread_mutex_t	m_timeat;
 	pthread_mutex_t	m_stat;
 }				t_philo;
 

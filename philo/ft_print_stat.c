@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 12:40:04 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/01 20:00:33 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:47:59 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	ft_print_philo_stat(t_philo *philo)
 	pthread_mutex_lock(philo->print);
 	printf("\033[1;34m\n~ Philosopher |%zu| ~ \t", philo->num);
 	printf("\033[1;37mStatus:\t");
-	if (!philo->status)
+	if (philo->status == 0)
 		printf("\033[1;31mDEAD\033[1;37m\n\n");
+	else if (philo->status == 2)
+		printf("\033[1;35mFINISH\033[0;37m\n");
 	else
 		printf("\033[1;32mALIVE\033[0;37m\n\n");
 	printf(" Live time:      |%zu|\n", philo->live_time);

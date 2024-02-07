@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:29:45 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/06 16:16:18 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:01:44 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,47 +19,55 @@ void	ft_grab_forks(t_philo *philo)
 	{
 		philo->l_fork->grabed = 1;
 		philo->lf_grab = 1;
-		ft_print_action(philo, "\033[1;36mhas taken a fork 🍴");
+		ft_print_action(philo, "\033[1;36mhas taken left fork 🍴");
 	}
+	pthread_mutex_unlock(&philo->l_fork->locker);
+	pthread_mutex_lock(&philo->r_fork->locker);
 	if (!philo->r_fork->grabed && !philo->rf_grab)
 	{
-		pthread_mutex_lock(&philo->r_fork->locker);
 		philo->r_fork->grabed = 1;
 		philo->rf_grab = 1;
-		ft_print_action(philo, "\033[1;36mhas taken a fork 🍴");
+		ft_print_action(philo, "\033[1;36mhas taken right fork 🍴");
 	}
+	pthread_mutex_unlock(&philo->r_fork->locker);
 }
 
 void	ft_release_forks(t_philo *philo, int print)
 {
+	pthread_mutex_lock(&philo->l_fork->locker);
 	if (philo->l_fork->grabed && philo->lf_grab)
 	{
 		philo->l_fork->grabed = 0;
 		philo->lf_grab = 0;
 		if (print == 1)
-			ft_print_action(philo, "\033[1;34mhas released a fork");
-		pthread_mutex_unlock(&philo->l_fork->locker);
+			ft_print_action(philo, "\033[1;34mhas released left fork");
 	}
+	pthread_mutex_unlock(&philo->l_fork->locker);
+	pthread_mutex_lock(&philo->r_fork->locker);
 	if (philo->r_fork->grabed && philo->rf_grab)
 	{
 		philo->r_fork->grabed = 0;
 		philo->rf_grab = 0;
 		if (print == 1)
-			ft_print_action(philo, "\033[1;34mhas released a fork");
-		pthread_mutex_unlock(&philo->r_fork->locker);
+			ft_print_action(philo, "\033[1;34mhas released right fork");
 	}
+	pthread_mutex_unlock(&philo->r_fork->locker);
 }
 
 static void	ft_is_eating(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->m_eating);
 	philo->eating = 1;
+	pthread_mutex_unlock(&philo->m_eating);
 	ft_print_action(philo, "\033[1;33mis eating 🍝");
 	philo->last_eat = ft_gettime() - philo->start_time;
+	pthread_mutex_lock(&philo->m_dtime);
 	philo->time_to_die += philo->last_eat;
+	pthread_mutex_unlock(&philo->m_dtime);
+	pthread_mutex_lock(&philo->m_timeat);
 	if (philo->times_to_eat > 0)
 		philo->times_to_eat--;
-	pthread_mutex_unlock(&philo->m_eating);
+	pthread_mutex_unlock(&philo->m_timeat);
 	ft_usleep(philo->time_to_eat);
 	pthread_mutex_lock(&philo->m_eating);
 	philo->eating = 0;
@@ -80,8 +88,7 @@ static void	ft_sleep_think(t_philo *philo)
 	if (status == 1)
 	{
 		ft_print_action(philo, "\033[1;37mis thinking 💭");
-		while (philo->l_fork->grabed && philo->r_fork->grabed)
-			ft_usleep(2);
+		ft_usleep(philo->time_to_eat);
 	}
 }
 

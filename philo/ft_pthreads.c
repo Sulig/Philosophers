@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:28:03 by sadoming          #+#    #+#             */
-/*   Updated: 2024/02/06 16:16:15 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:01:25 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ int	ft_init_mutex(t_prog *prog)
 			return (ft_write_error(prog, 2));
 		if (pthread_mutex_init(&prog->philos[i].m_ltime, NULL) != 0)
 			return (ft_write_error(prog, 2));
+		if (pthread_mutex_init(&prog->philos[i].m_dtime, NULL) != 0)
+			return (ft_write_error(prog, 2));
 		if (pthread_mutex_init(&prog->philos[i].m_eating, NULL) != 0)
+			return (ft_write_error(prog, 2));
+		if (pthread_mutex_init(&prog->philos[i].m_timeat, NULL) != 0)
 			return (ft_write_error(prog, 2));
 		i++;
 	}
@@ -66,7 +70,11 @@ int	ft_destroy_mutex(t_prog *prog)
 			return (ft_write_error(prog, 3));
 		if (pthread_mutex_destroy(&prog->philos[i].m_ltime) != 0)
 			return (ft_write_error(prog, 3));
+		if (pthread_mutex_destroy(&prog->philos[i].m_dtime) != 0)
+			return (ft_write_error(prog, 3));
 		if (pthread_mutex_destroy(&prog->philos[i].m_eating) != 0)
+			return (ft_write_error(prog, 3));
+		if (pthread_mutex_destroy(&prog->philos[i].m_timeat) != 0)
 			return (ft_write_error(prog, 3));
 		i++;
 	}

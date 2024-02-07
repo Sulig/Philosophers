@@ -15,7 +15,8 @@ NAME = philo
 # Default arguments for make run
 DEF = 1 400 200 200
 DEF = 2 400 200 200
-#DEF = 100 800 200 200 #No Philo should die!
+DEF = 100 800 200 200 #No Philo should die!
+DEF = 10 800 200 100 2 #Stop when all eaten 2 times
 # ------------------ #
 # Flags:
 

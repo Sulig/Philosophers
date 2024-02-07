@@ -6,16 +6,17 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2024/02/02 17:35:23 by sadoming         ###   ########.fr        #
+#    Updated: 2024/02/07 17:04:47 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
+# ------------------ #
 # Default arguments for make run
-DEF = 1 400 200 200
-DEF = 2 400 200 200
-DEF = 100 800 200 200 #No Philo should die!
+DEF = 1 400 200 200 #Should die on 400ms
+DEF = 2 400 200 200 #One Philo should die
+#DEF = 100 800 200 200 #No Philo should die!
 DEF = 10 800 200 100 2 #Stop when all eaten 2 times
 # ------------------ #
 # Flags:
@@ -23,6 +24,11 @@ DEF = 10 800 200 100 2 #Stop when all eaten 2 times
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
 CFLAGSF = -Wall -Wextra -Werror -fsanitize=thread -g
+# ------------------ #
+# ------------------ #
+RS ?= n
+
+RS := $(shell read -p "Do it? [y/n]: " response; echo $$response)
 # ------------------ #
 # Sources:
 
@@ -50,7 +56,7 @@ norm:
 #-------------------------------------------------------------#
 run: $(NAME)
 	@echo "\033[1;34m\n~ **************************************** ~\n"
-	@echo " ~ Running ./$(NAME) $(DEF)"
+	@echo "\tRunning ./$(NAME) $(DEF)"
 	@echo "\n~ **************************************** ~ \033[1;37m\n"
 	@./$(NAME) $(DEF)
 
@@ -66,7 +72,7 @@ $(NAME): $(OBJ) $(LIB) $(MAK)
 	@echo "\033[1;93m * Making $(NAME) -->\033[1;97m\n"
 	@$(CC) $(OBJ) -o $(NAME)
 	@echo "\033[1;35m\n~ **************************************** ~\n"
-	@echo "  ~\t    Philosophers is ready!\t       ~\n"
+	@echo "  ~\t   Philosophers is ready!\t ~ \n"
 	@echo "~ **************************************** ~\n"
 #-------------------------------------------------------------#
 # ******************************************************************************* #
@@ -74,7 +80,7 @@ $(NAME): $(OBJ) $(LIB) $(MAK)
 
 debug: $(NAME)
 	@echo "\033[1;34m\n~ **************************************** ~\n"
-	@echo " ~ Running ./$(NAME) $(DEF)"
+	@echo "\tRunning ./$(NAME) $(DEF)"
 	@echo "\n~ **************************************** ~\n"
 	@lldb $(NAME) $(DEF)
 
@@ -98,15 +104,15 @@ val: $(NAME)
 	@echo "\033[1;34m\n~ **************************************** ~\n"
 	@echo " ~ Running ./$(NAME) $(DEF)"
 	@echo "\n~ **************************************** ~\n"
-	@valgrind --leak-check=full -s ./$(NAME) $(DEF)
+	@valgrind --leak-check=full ./$(NAME) $(DEF)
 
 val_fsn:
 	$(CC) $(CFLAGSF) $(SRC) $(LIB)
 	@echo "\033[1;34m\n~ **************************************** ~\n"
-	@echo " ~ Running ./a.out $(DEF)"
-	@echo "\n~ **************************************** ~\n"
-	@./a.out $(DEF)
-	@valgrind --leak-check=full -s ./a.out $(DEF)
+	@echo "\033[1;31m !Warning! This command can cause an overflow!\n"
+	@echo "\033[1;33m Continue only at your own risk\033[1;31m\n"
+	@if [ "$(RS)" = "y" ]; then \ echo "\tRunning ./a.out $(DEF)\n"\
+	valgrind --leak-check=full ./a.out $(DEF) \
 
 # ********************************************************************************* #
 # Clean region
@@ -131,5 +137,5 @@ clear: fclean
 re: fclean all
 # -------------------- #
 .PHONY: all clean clear fclean fsanitize
-.PHONY: debug leaks norm re run val val_fsn trueall
+.PHONY: debug leaks norm re run val
 # ********************************************************************************** #

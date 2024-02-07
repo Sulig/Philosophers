@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2024/02/07 17:04:47 by sadoming         ###   ########.fr        #
+#    Updated: 2024/02/07 17:29:05 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,6 @@ DEF = 10 800 200 100 2 #Stop when all eaten 2 times
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
 CFLAGSF = -Wall -Wextra -Werror -fsanitize=thread -g
-# ------------------ #
-# ------------------ #
-RS ?= n
-
-RS := $(shell read -p "Do it? [y/n]: " response; echo $$response)
 # ------------------ #
 # Sources:
 
@@ -107,12 +102,21 @@ val: $(NAME)
 	@valgrind --leak-check=full ./$(NAME) $(DEF)
 
 val_fsn:
+	@echo "\033[1;34m\n~ **************************************** ~\n"
 	$(CC) $(CFLAGSF) $(SRC) $(LIB)
 	@echo "\033[1;34m\n~ **************************************** ~\n"
 	@echo "\033[1;31m !Warning! This command can cause an overflow!\n"
-	@echo "\033[1;33m Continue only at your own risk\033[1;31m\n"
-	@if [ "$(RS)" = "y" ]; then \ echo "\tRunning ./a.out $(DEF)\n"\
-	valgrind --leak-check=full ./a.out $(DEF) \
+	@echo "\033[1;33m Continue only at your own risk\033[1;33m\t"
+	@make -s .comand
+
+RS ?= n
+RS := $(shell read -p "Do it? [y/n]: " response; echo $$response)
+
+.comand: 
+	@if [ "$(RS)" = "y" ]; then \
+		echo "\tRunning ./a.out $(DEF)\n"; \
+		valgrind --leak-check=full ./a.out $(DEF); \
+	fi
 
 # ********************************************************************************* #
 # Clean region

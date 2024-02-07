@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 11:51:06 by sadoming          #+#    #+#              #
-#    Updated: 2024/02/07 17:29:05 by sadoming         ###   ########.fr        #
+#    Updated: 2024/02/07 17:49:27 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,17 +105,14 @@ val_fsn:
 	@echo "\033[1;34m\n~ **************************************** ~\n"
 	$(CC) $(CFLAGSF) $(SRC) $(LIB)
 	@echo "\033[1;34m\n~ **************************************** ~\n"
-	@echo "\033[1;31m !Warning! This command can cause an overflow!\n"
-	@echo "\033[1;33m Continue only at your own risk\033[1;33m\t"
-	@make -s .comand
-
-RS ?= n
-RS := $(shell read -p "Do it? [y/n]: " response; echo $$response)
-
-.comand: 
-	@if [ "$(RS)" = "y" ]; then \
+	@echo "\033[1;31m !Warning! This command can cause an overflow!"
+	@echo "\033[1;33m Continue only at your own risk\033[1;37m\n"
+	@read -p " Continue? [y\n]: " response; \
+	if [ "$$response" = "y" ]; then \
 		echo "\tRunning ./a.out $(DEF)\n"; \
 		valgrind --leak-check=full ./a.out $(DEF); \
+	else \
+		make -s fclean; \
 	fi
 
 # ********************************************************************************* #

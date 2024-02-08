@@ -1,6 +1,6 @@
 # Philosophers
 
-~ Started on: 27/12/2023 ~ *** ~ WORK IN PROGRESS ~~~ 
+~ Started on: 27/12/2023 ~ *** ~ Ended on: 08/02/2024 ~~~ Waiting for grade
 
 [![Stars](https://img.shields.io/github/stars/Sulig/Philosophers?color=ffff00&label=Stars&logo=Stars&style=?style=flat)](https://github.com/Sulig/Philosophers)
 [![Size](https://img.shields.io/github/repo-size/Sulig/Philosophers?color=blue&label=Size&logo=Size&style=?style=flat)](https://github.com/Sulig/Philosophers)
